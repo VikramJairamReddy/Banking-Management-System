@@ -125,8 +125,7 @@ public abstract class Account {
     }
 
     /**
-     * Returns a formatted string representation
-     * of the account.
+     * Returns a formatted string representation of the account.
      */
     @Override
     public String toString() {
