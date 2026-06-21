@@ -121,8 +121,8 @@ public class LoginFrame extends JFrame {
         return usernameField.getText().trim();
     }
 
-    public char[] getPassword() {
-        return passwordField.getPassword();
+    public String getPassword() {
+        return new String(passwordField.getPassword());
     }
 
     /**
