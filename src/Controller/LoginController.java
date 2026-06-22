@@ -42,6 +42,7 @@ public class LoginController {
             JOptionPane.showMessageDialog(frame,
                     "Invalid Username or Password", "Login Failed",
                     JOptionPane.ERROR_MESSAGE);
+            frame.resetPasswordField();
         }
     }
 }

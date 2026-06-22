@@ -125,6 +125,12 @@ public class LoginFrame extends JFrame {
         return new String(passwordField.getPassword());
     }
 
+    public void resetPasswordField() {
+        passwordField.setText("");
+        repaint();
+    }
+    
+
     /**
      * Returns the login button so that a listener can be added
      *
