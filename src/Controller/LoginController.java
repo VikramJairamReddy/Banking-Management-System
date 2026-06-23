@@ -7,7 +7,7 @@
 package Controller;
 
 import Model.LoginModel;
-import View.LoginFrame;
+import View.*;
 
 import javax.swing.*;
 
@@ -16,11 +16,12 @@ public class LoginController {
     private LoginFrame frame;
     private LoginModel model;
 
-    public LoginController(LoginFrame frame, LoginModel model) {
+    public LoginController() {
 
-        this.frame = frame;
-        this.model = model;
+        frame = new LoginFrame();
+        model = new LoginModel();
 
+        frame.setVisible(true);
         // Adding listener to the Login button
         frame.getLoginButton().addActionListener(e -> login());
     }
@@ -34,15 +35,18 @@ public class LoginController {
         String username = frame.getUsername();
         String password = frame.getPassword();
 
-        if(model.isValidLogin(username, password)) {
-            JOptionPane.showMessageDialog(frame, "Login Successful");
-            frame.dispose(); // close login window
-        } 
-        else {
-            JOptionPane.showMessageDialog(frame,
-                    "Invalid Username or Password", "Login Failed",
-                    JOptionPane.ERROR_MESSAGE);
-            frame.resetPasswordField();
+        try{
+            if(model.isValidLogin(username, password)) {
+                JOptionPane.showMessageDialog(frame, "Login Successful");
+                this.frame.dispose(); // close login window
+            } 
+            else {
+                frame.resetPasswordField();
+                throw new IllegalArgumentException("Invalid Username or Password");
+            }
+        }
+        catch(Exception e) {
+            JOptionPane.showMessageDialog(frame, e.getMessage(), "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

@@ -10,7 +10,7 @@ package Model;
 public class LoginModel {
 
     // Default employee username
-    private static final String USERNAME = "Admin";
+    private static final String USERNAME = "admin";
 
     // Default employee password
     private static final String PASSWORD = "admin12";
@@ -23,6 +23,9 @@ public class LoginModel {
      * @return true if the entered credentials are valid, otherwise false
      */
     public boolean isValidLogin(String username, String password) {
+        if(username == null && password.length() <= 2) {
+            throw new IllegalArgumentException("Invalid Username or Password");
+        }
         return USERNAME.equals(username) && PASSWORD.equals(password);
     }
 
