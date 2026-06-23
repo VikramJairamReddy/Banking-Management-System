@@ -10,8 +10,6 @@
  */
 
 import Controller.LoginController;
-import View.LoginFrame;
-import Model.LoginModel;
 
 import javax.swing.SwingUtilities;
 
@@ -19,13 +17,7 @@ public class Main {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            LoginModel model = new LoginModel();
-            LoginFrame frame = new LoginFrame();
-    
-            new LoginController(frame, model);
-            
-            // display the login window
-            frame.setVisible(true);
+            new LoginController();
         });
     }
 }
