@@ -1,6 +1,10 @@
 /**
- * LoginController handles login button actions and connects the Login view with the Login model.
+ * LoginController handles login button actions and connects 
+ * the Login view with the Login model.
  * It gets the input from the frame and sends it to the model for validation.
+ * 
+ * If the entered credentials are correct, 
+ * the login window closes and dashboard window pops up.
  * 
  * @author Ganta Vikram Jairam Reddy
  */
@@ -40,7 +44,8 @@ public class LoginController {
             if(model.isValidLogin(username, password)) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 this.frame.dispose(); // close login window
-                
+
+                // Opening the dashboard window
                 dashboard = new DashboardFrame(model.getUsername());
                 dashboard.setVisible(true);
             } 
