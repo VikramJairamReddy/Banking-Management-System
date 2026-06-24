@@ -39,6 +39,9 @@ public class SavingsAccount extends Account {
      * @param interestRate new interest rate percentage
      */
     public void setInterestRate(double interestRate) {
+        if(interestRate < 0) {
+            throw new IllegalArgumentException("Interest rate cannot be negative");
+        }
         this.interestRate = interestRate;
     }
 
