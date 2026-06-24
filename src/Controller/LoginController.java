@@ -15,6 +15,7 @@ public class LoginController {
 
     private LoginFrame frame;
     private LoginModel model;
+    private DashboardFrame dashboard;
 
     public LoginController() {
 
@@ -39,6 +40,9 @@ public class LoginController {
             if(model.isValidLogin(username, password)) {
                 JOptionPane.showMessageDialog(frame, "Login Successful");
                 this.frame.dispose(); // close login window
+                
+                dashboard = new DashboardFrame(model.getUsername());
+                dashboard.setVisible(true);
             } 
             else {
                 frame.resetPasswordField();

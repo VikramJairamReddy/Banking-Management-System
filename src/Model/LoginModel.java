@@ -30,6 +30,6 @@ public class LoginModel {
     }
 
     public String getUsername(){
-        return USERNAME;
+        return USERNAME.toUpperCase();
     }
 }
