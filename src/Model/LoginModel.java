@@ -23,7 +23,8 @@ public class LoginModel {
      * @return true if the entered credentials are valid, otherwise false
      */
     public boolean isValidLogin(String username, String password) {
-        if(username == null && password.length() <= 2) {
+        if(username == null || password == null || username.trim().isEmpty() ||
+            password.length() < 3) {
             throw new IllegalArgumentException("Invalid Username or Password");
         }
         return USERNAME.equals(username) && PASSWORD.equals(password);
