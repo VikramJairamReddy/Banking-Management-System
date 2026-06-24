@@ -31,10 +31,38 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Main Panel with grid bag to centre the login panel
-        JPanel mainPanel = new JPanel(new GridBagLayout());
-        mainPanel.setBackground(BACKGROUND);
+        // -------- FORM PANEL --------
 
+        // Form panel for username and password fields
+        JPanel formPanel = new JPanel(new GridLayout(2, 2, 5, 10));
+        formPanel.setBackground(Color.WHITE);
+
+        // Username label
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameLabel.setFont(new Font("Arial", Font.BOLD, 13));
+
+        // Password label
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setFont(new Font("Arial", Font.BOLD, 13));
+  
+        // Username input field
+        usernameField = new JTextField();
+        usernameField.setColumns(20);
+        usernameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
+
+        // Password input field
+        passwordField = new JPasswordField();
+        passwordField.setColumns(20);
+        passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
+
+        // Add labels and fields to the form panel
+        formPanel.add(usernameLabel);
+        formPanel.add(usernameField);
+        formPanel.add(passwordLabel);
+        formPanel.add(passwordField);
+
+        // -------- LOGIN PANEL --------
+        
         // white Login panel 
         JPanel loginPanel = new JPanel();
         loginPanel.setPreferredSize(new Dimension(400, 320));
@@ -65,34 +93,6 @@ public class LoginFrame extends JFrame {
         loginPanel.add(subtitleLabel);
         loginPanel.add(Box.createVerticalStrut(25));// for empty space of 25 pixels
 
-        // Form panel for username and password fields
-        JPanel formPanel = new JPanel(new GridLayout(2, 2, 5, 10));
-        formPanel.setBackground(Color.WHITE);
-
-        // Username label
-        JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 13));
-
-        // Password label
-        JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setFont(new Font("Arial", Font.BOLD, 13));
-  
-        // Username input field
-        usernameField = new JTextField();
-        usernameField.setColumns(20);
-        usernameField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
-
-        // Password input field
-        passwordField = new JPasswordField();
-        passwordField.setColumns(20);
-        passwordField.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
-
-        // Add labels and fields to the form panel
-        formPanel.add(usernameLabel);
-        formPanel.add(usernameField);
-        formPanel.add(passwordLabel);
-        formPanel.add(passwordField);
-
         // Adding Form panel to Login panel
         loginPanel.add(formPanel);
         loginPanel.add(Box.createVerticalStrut(25));
@@ -107,6 +107,13 @@ public class LoginFrame extends JFrame {
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
 
         loginPanel.add(loginButton); // Adding Login button to Login panel
+
+        // -------- MAIN PANEL --------
+        
+        // Main Panel with grid bag to centre the login panel
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(BACKGROUND);
+
         mainPanel.add(loginPanel); // Adding Login panel to Main panel
 
         //Add main panel to frame
