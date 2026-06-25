@@ -6,11 +6,13 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Create Savings and Checking accounts
 - Deposit and withdraw funds
 - Transfer money between accounts
+- Search accounts by name or account number
 - Transaction history tracking
-- Account management using HashMap
 
 ## Technologies
 - Java
+- Java Swing
+- MVC Architecture
 - OOP
 - MVC
 - Collections Framework
@@ -22,19 +24,24 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Polymorphism
 
 ## Project Structure
-Controller/
-- BankController.java
 
-Model/
-- Account.java
-- Bank.java
-- CheckingAccount.java
-- SavingsAccount.java
-- Transaction.java
-- Validate.java
-
-View/
-- GUI classes
+src/
+|-- Controller/
+|   |-- BankController.java
+|   |-- LoginController.java
+|
+|-- Model/
+|   |-- Account.java
+|   |-- Bank.java
+|   |-- CheckingAccount.java
+|   |-- LoginModel.java
+|   |-- SavingsAccount.java
+|   |-- Transaction.java
+|   |-- Validate.java
+|
+|-- View/
+    |-- LoginFrame.java
+    |-- DashboardFrame.java
 
 ## Author
 Ganta Vikram Jairam Reddy

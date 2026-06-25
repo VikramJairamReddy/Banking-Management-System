@@ -90,12 +90,36 @@ public class Bank {
     }
 
     /**
+     * Searches for accounts whose account holder name contains
+     * the given search word, irrespective of Upper or Lower Case.
+     *
+     * @param name the name to search
+     * @return a list of matching accounts; empty list if no results found
+     */
+    public List<Account> getAccountByName(String name) {
+        List<Account> list = new ArrayList<>();
+
+        if(name == null || name.trim().isEmpty()) {
+            return list;
+        }
+
+        String searchName = name.trim().toLowerCase(); 
+
+        for(Account account : accounts.values()) {
+            if(account.getAccountHolderName().toLowerCase().contains(searchName)) {
+                list.add(account);
+            }
+        }
+        return list;
+    }
+
+    /**
      * Checks is the given account number exists and is a valid account number
      * 
      * @param accountNumber account number to be checked
      **/
     public boolean accountExists(String accountNumber) {
-        return accounts.containsKey(accountNumber) && Validate.isValidAccountNumber(accountNumber);
+        return Validate.isValidAccountNumber(accountNumber) && accounts.containsKey(accountNumber);
     }
 
     /**
