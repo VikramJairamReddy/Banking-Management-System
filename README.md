@@ -14,7 +14,6 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Java Swing
 - MVC Architecture
 - OOP
-- MVC
 - Collections Framework
 
 ## OOP Concepts
@@ -25,6 +24,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 
 ## Project Structure
 
+```text
 src/
 |-- Controller/
 |   |-- BankController.java
@@ -42,6 +42,7 @@ src/
 |-- View/
     |-- LoginFrame.java
     |-- DashboardFrame.java
+```
 
 ## Author
 Ganta Vikram Jairam Reddy
