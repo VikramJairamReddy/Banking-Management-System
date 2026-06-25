@@ -19,13 +19,21 @@ import javax.swing.*;
 
 public class DashboardController {
 
-    private DashboardFrame dashboard;
-    private Bank bank;
+    private final DashboardFrame dashboard;
+    private final BankController bankController;
+    private final Bank bank;
 
+    /**
+     * Creates dashboard controller
+     *
+     * @param employeeName logged-in employee name
+     * @param bank shared Bank object
+     */
     public DashboardController(String employeeName, Bank bank) {
 
         this.bank = bank;
         this.dashboard = new DashboardFrame(employeeName);
+        this.bankController = new BankController(bank);
 
         update();
 
@@ -41,8 +49,14 @@ public class DashboardController {
         dashboard.setVisible(true);
     }
 
+    /**
+     * Opens the Create Account screen for creating a new bank account for the customer.
+     *
+     * This method launches the CreateAccountController, which handles
+     * user input, account creation logic, and updates the bank model.
+     */
     private void createAccount() {
-        JOptionPane.showMessageDialog(dashboard, "Create Account clicked");
+        new CreateAccountController(bankController, dashboard);
         update();
     }
 
