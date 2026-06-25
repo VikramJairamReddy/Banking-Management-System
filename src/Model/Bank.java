@@ -243,8 +243,8 @@ public class Bank {
         LocalDate today = LocalDate.now();
 
         for(List<Transaction> list : transactionHistory.values()) {
-            for (Transaction t : list) {
-                if (t.getTime().toLocalDate().equals(today)) {
+            for(Transaction t : list) {
+                if(t.getTime().toLocalDate().equals(today)) {
                     count++;
                 }
             }

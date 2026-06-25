@@ -1,17 +1,15 @@
 /**
  * LoginController handles login button actions and connects 
  * the Login view with the Login model.
- * It gets the input from the frame and sends it to the model for validation.
- * 
- * If the entered credentials are correct, 
- * the login window closes and dashboard window pops up.
+ * It validates credentials and opens the dashboard on success.
  * 
  * @author Ganta Vikram Jairam Reddy
  */
 package Controller;
 
 import Model.LoginModel;
-import View.*;
+import Model.Bank;
+import View.LoginFrame;
 
 import javax.swing.*;
 
@@ -19,20 +17,22 @@ public class LoginController {
 
     private LoginFrame frame;
     private LoginModel model;
-    private DashboardFrame dashboard;
+    private Bank bank;
 
     public LoginController() {
 
         frame = new LoginFrame();
         model = new LoginModel();
+        bank = new Bank();
 
-        frame.setVisible(true);
         // Adding listener to the Login button
         frame.getLoginButton().addActionListener(e -> login());
+        
+        frame.setVisible(true);
     }
 
     /**
-     * Checks username and password and displays the result
+     * Validates login credentials and opens dashboard if successful
      */
     private void login() {
 
@@ -42,12 +42,11 @@ public class LoginController {
 
         try{
             if(model.isValidLogin(username, password)) {
-                JOptionPane.showMessageDialog(frame, "Login Successful");
+
                 this.frame.dispose(); // close login window
 
-                // Opening the dashboard window
-                dashboard = new DashboardFrame(model.getUsername());
-                dashboard.setVisible(true);
+                // Open dashboard controller
+                new DashboardController(model.getUsername(), bank);
             } 
             else {
                 frame.resetPasswordField();
