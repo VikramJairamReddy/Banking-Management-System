@@ -12,6 +12,7 @@
 package Model;
 
 import java.util.Map;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -229,6 +230,27 @@ public class Bank {
     public List<Transaction> getTransactionHistory(String accountNumber) {
         return (transactionHistory.containsKey(accountNumber))?
         new ArrayList<>(transactionHistory.get(accountNumber)) : new ArrayList<>();
+    }
+
+    /**
+     * Returns the number of transactions that occurred today.
+     *
+     * @return count of today's transactions
+     */
+    public int getTodayTransactionCount() {
+
+        int count = 0;
+        LocalDate today = LocalDate.now();
+
+        for(List<Transaction> list : transactionHistory.values()) {
+            for (Transaction t : list) {
+                if (t.getTime().toLocalDate().equals(today)) {
+                    count++;
+                }
+            }
+        }
+
+        return count;
     }
 
     // -------- GENERATING ID --------
