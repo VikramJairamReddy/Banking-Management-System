@@ -14,8 +14,8 @@ public class BankController {
 
     private Bank bank;
 
-    public BankController() {
-        bank = new Bank();
+    public BankController(Bank bank) {
+        this.bank = bank;
     }
 
     // -------- ACCOUNT --------
