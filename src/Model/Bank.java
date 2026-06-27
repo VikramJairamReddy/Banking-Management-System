@@ -24,12 +24,13 @@ public class Bank {
     private static final String WITHDRAW = "Withdraw";
     private static final String TRANSFER_SENDER = "Transfer Sender";
     private static final String TRANSFER_RECEIVER = "Transfer Receiver";
+    private static final double INTEREST_RATE = 6.0;
 
     private long nextAccountNumber;
     private long transactionId ;
 
-    private Map<String, Account> accounts;
-    private Map<String, List<Transaction>> transactionHistory;
+    private final Map<String, Account> accounts;
+    private final Map<String, List<Transaction>> transactionHistory;
 
     public Bank() {
         accounts = new HashMap<>();
@@ -280,5 +281,15 @@ public class Bank {
      */
     public int getNumberOfAccounts() {
         return accounts.size();
+    }
+
+    /**
+     * Returns the Interest rate applied on the account.
+     * It can only be called on the class name because it is a static method
+     * 
+     * @return the Interest rate applied on the savings accouont
+     */
+    public static double getInterestRate() {
+        return INTEREST_RATE;
     }
 }
