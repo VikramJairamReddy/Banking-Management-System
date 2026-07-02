@@ -17,14 +17,13 @@ import Model.Bank;
 import Model.CheckingAccount;
 import Model.SavingsAccount;
 import View.CreateAccountFrame;
-import View.DashboardFrame;
 
 import javax.swing.*;
 
 public class CreateAccountController {
 
     private final CreateAccountFrame view;
-    private final DashboardFrame dashboard;
+    private final DashboardController dashboard;
     private final BankController bankController;
 
     /**
@@ -33,12 +32,12 @@ public class CreateAccountController {
      * @param bankController shared controller for bank operations
      * @param dashboard dashboard frame
      */
-    public CreateAccountController(BankController bankController, DashboardFrame dashboard) {
+    public CreateAccountController(BankController bankController, DashboardController dashboard) {
 
         this.bankController = bankController;
         this.dashboard = dashboard;
 
-        dashboard.setVisible(false);
+        dashboard.showDashboard(false);
         view = new CreateAccountFrame();
 
         // Button listeners
@@ -101,7 +100,8 @@ public class CreateAccountController {
      * Closes the Create Account window without saving.
      */
     private void closeView() {
+        dashboard.refreshDashboard();
+        dashboard.showDashboard(true);
         view.dispose();
-        dashboard.setVisible(true);
     }
 }

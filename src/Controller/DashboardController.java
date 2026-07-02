@@ -56,8 +56,7 @@ public class DashboardController {
      * user input, account creation logic, and updates the bank model.
      */
     private void createAccount() {
-        new CreateAccountController(bankController, dashboard);
-        update();
+        new CreateAccountController(bankController, this);
     }
 
     private void findAccount() {
@@ -100,5 +99,21 @@ public class DashboardController {
     private void update() {
         dashboard.setTotalAccounts(bank.getNumberOfAccounts());
         dashboard.setTotalTransactions(bank.getTodayTransactionCount());
+    }
+
+    /**
+     * Refreshes the dashboard to reflect any changes in the bank data.
+     */
+    public void refreshDashboard() {
+        update();
+    }
+
+    /**
+     * Shows or hides the dashboard window.
+     *
+     * @param value true to show, false to hide
+     */
+    public void showDashboard(boolean value) {
+        dashboard.setVisible(value);
     }
 }
