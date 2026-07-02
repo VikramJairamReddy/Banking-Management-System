@@ -38,6 +38,7 @@ public class CreateAccountFrame extends JFrame {
         // -------- TITLE --------
         JLabel title = new JLabel("Create Customer Account", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 22));
+        title.setBorder(BorderFactory.createEmptyBorder(15, 0, 5, 0));
         add(title, BorderLayout.NORTH);
 
         // -------- FORM PANEL --------
