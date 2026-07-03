@@ -36,7 +36,7 @@ public class FindAccountFrame extends JFrame {
         JPanel centerPanel = new JPanel(new GridLayout(3, 2, 10, 10));
         centerPanel.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        searchTypeBox = new JComboBox<>(new String[]{"Account Number", "Name"});
+        searchTypeBox = new JComboBox<>(new String[]{"Account Number", "Customer Name"});
         searchField = new JTextField();
 
         centerPanel.add(new JLabel("Search By:"));

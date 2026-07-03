@@ -60,7 +60,7 @@ public class DashboardController {
     }
 
     private void findAccount() {
-        JOptionPane.showMessageDialog(dashboard, "Find Account Clicked");
+        new FindAccountController(bankController, this);
     }
 
     private void deposit() {
