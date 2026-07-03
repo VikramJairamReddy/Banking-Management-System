@@ -133,4 +133,15 @@ public abstract class Account {
             ("[type='%s', accountNumber='%s', name='%s', balance=%.2f, phone='%s']",
             getAccountType(), ACCOUNT_NUMBER, accountHolderName, balance, phoneNumber);
     }
+
+    /**
+     * Returns a user friendly display string for the account.
+     */
+    public String toDisplayString() {
+        return "\nAccount Number : " + getAccountNumber() + "\n" +
+               "Customer Name    : " + getAccountHolderName() + "\n" +
+               "Account Type     : " + getAccountType() + "\n" +
+               "Balance          : $" + String.format("%.2f", getBalance()) + "\n" +
+               "---------------------------------\n";
+    }
 }

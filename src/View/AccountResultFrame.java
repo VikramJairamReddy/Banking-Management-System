@@ -27,7 +27,7 @@ public class AccountResultFrame extends JFrame {
         setLayout(new BorderLayout());
 
         // -------- TITLE --------
-        JLabel title = new JLabel("Results For  " + searchValue, SwingConstants.CENTER);
+        JLabel title = new JLabel("Results For  \"" + searchValue + "\"", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 18));
         title.setBorder(BorderFactory.createEmptyBorder(15, 0, 5, 0));
         add(title, BorderLayout.NORTH);
@@ -49,16 +49,17 @@ public class AccountResultFrame extends JFrame {
         add(new JScrollPane(resultArea), BorderLayout.CENTER);
 
         // -------- BOTTOM PANEL --------
-        JPanel bottom = new JPanel();
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
 
         backButton = new JButton("Back");
         backButton.setBackground(Color.GRAY);
         backButton.setForeground(Color.WHITE);
-        backButton.setPreferredSize(new Dimension(130, 35));
+        backButton.setPreferredSize(new Dimension(100, 30));
         backButton.setFocusPainted(false);
         backButton.setOpaque(true);
         backButton.setBorderPainted(false);
 
+        bottom.add(backButton);
         // Add the bottom panel to the frame
         add(bottom, BorderLayout.SOUTH);
     }
