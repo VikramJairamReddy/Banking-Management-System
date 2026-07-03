@@ -54,9 +54,10 @@ public class AccountResultFrame extends JFrame {
         backButton = new JButton("Back");
         backButton.setBackground(Color.GRAY);
         backButton.setForeground(Color.WHITE);
-        backButton.setPreferredSize(new Dimension(100, 30));
+        backButton.setPreferredSize(new Dimension(130, 35));
         backButton.setFocusPainted(false);
-        bottom.add(backButton);
+        backButton.setOpaque(true);
+        backButton.setBorderPainted(false);
 
         // Add the bottom panel to the frame
         add(bottom, BorderLayout.SOUTH);
