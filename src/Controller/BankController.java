@@ -46,8 +46,18 @@ public class BankController {
      * @param accountNumber account number of the account be found
      * @return the account object if present, otherwise null
      */
-    public Account findAccount(String accountNumber) {
+    public Account getAccountByAccountNumber(String accountNumber) {
         return bank.findAccount(accountNumber);
+    }
+
+    /**
+     * Requests to find accounts by customer name.
+     *
+     * @param customerName name of the customer
+     * @return list of account objects associated with the customer name
+     */
+    public List<Account> getAccountByName(String customerName) {
+        return bank.getAccountByName(customerName);
     }
 
     /**
