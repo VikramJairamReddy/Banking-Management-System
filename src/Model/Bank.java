@@ -189,6 +189,11 @@ public class Bank {
             return false;
         }
 
+        // Prevent transferring to the same account
+        if(fromAccountNumber.equals(toAccountNumber)) {
+            return false;
+        }
+
         Account sender = accounts.get(fromAccountNumber);
         Account receiver = accounts.get(toAccountNumber);
 

@@ -56,7 +56,7 @@ public class TransactionFrame extends JFrame {
         centerPanel.add(accountLabel);
         centerPanel.add(accountNumberField);
 
-        if(transactionType.equals("Transfer")) {
+        if("Transfer".equals(transactionType)) {
             receiverLabel = new JLabel("Recipient Account Number:");
             receiverAccountField = new JTextField(20);
 
