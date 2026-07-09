@@ -19,6 +19,10 @@ import javax.swing.*;
 
 public class DashboardController {
 
+    private static final String DEPOSIT = "Deposit";
+    private static final String WITHDRAW = "Withdraw";
+    private static final String TRANSFER = "Transfer";
+
     private final DashboardFrame dashboard;
     private final BankController bankController;
     private final Bank bank;
@@ -64,18 +68,15 @@ public class DashboardController {
     }
 
     private void deposit() {
-        JOptionPane.showMessageDialog(dashboard, "Deposit clicked");
-        update();
+        new TransactionController(DEPOSIT, bankController, this);
     }
 
     private void withdraw() {
-        JOptionPane.showMessageDialog(dashboard, "Withdraw clicked");
-        update();
+       new TransactionController(WITHDRAW, bankController, this);
     }
 
     private void transfer() {
-        JOptionPane.showMessageDialog(dashboard, "Transfer clicked");
-        update();
+        new TransactionController(TRANSFER, bankController, this);
     }
 
     private void transactions() {
