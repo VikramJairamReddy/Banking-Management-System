@@ -143,16 +143,22 @@ public class Bank {
      * @return true if deposit was successful, otherwise false
      */
     public boolean deposit(String accountNumber, double amount) {
-        if(!accountExists(accountNumber) || !Validate.isValidAmount(amount)) {
-            return false;
+        if(!accountExists(accountNumber)) {
+            throw new IllegalArgumentException("Account not found");
         }
-
-        if(accounts.get(accountNumber).deposit(amount)) {
+    
+        if(!Validate.isValidAmount(amount)) {
+            throw new IllegalArgumentException("Invalid amount");
+        }
+    
+        Account account = accounts.get(accountNumber);
+    
+        if(account.deposit(amount)) {
             addTransaction(accountNumber, amount, DEPOSIT);
             return true;
         }
-
-        return false;
+    
+        throw new IllegalArgumentException("Deposit failed");
     }
 
     /**
@@ -163,15 +169,27 @@ public class Bank {
      * @return true if withdrawal was successful, otherwise false
      */
     public boolean withdraw(String accountNumber, double amount) {
-        if(!accountExists(accountNumber) || !Validate.isValidAmount(amount)) {
-            return false;
+        if(!accountExists(accountNumber)) {
+            throw new IllegalArgumentException("Account not found");
         }
-
-        if(accounts.get(accountNumber).withdraw(amount)) {
+    
+        if(!Validate.isValidAmount(amount)) {
+            throw new IllegalArgumentException("Invalid amount");
+        }
+    
+        Account account = accounts.get(accountNumber);
+    
+        // Checks balance and overdraft limit
+        if(amount > account.possibleWithdraw()) {
+            throw new IllegalArgumentException("Insufficient balance");
+        }
+    
+        if(account.withdraw(amount)) {
             addTransaction(accountNumber, amount, WITHDRAW);
             return true;
         }
-        return false;
+    
+        throw new IllegalArgumentException("Withdrawal failed");
     }
 
     /**
@@ -184,31 +202,48 @@ public class Bank {
      */
     public boolean transfer(String fromAccountNumber, String toAccountNumber, double amount) {
 
-        if(!accountExists(fromAccountNumber) || !accountExists(toAccountNumber) ||
-            !Validate.isValidAmount(amount)) {
-            return false;
+        if(!accountExists(fromAccountNumber)) {
+            throw new IllegalArgumentException("Sender account not found");
         }
 
-        // Prevent transferring to the same account
+        if(!accountExists(toAccountNumber)) {
+            throw new IllegalArgumentException("Recipient account not found");
+        }
+
+        if(!Validate.isValidAmount(amount)) {
+            throw new IllegalArgumentException("Invalid amount");
+        }
+
         if(fromAccountNumber.equals(toAccountNumber)) {
-            return false;
+            throw new IllegalArgumentException("Cannot transfer to the same account");
         }
 
         Account sender = accounts.get(fromAccountNumber);
         Account receiver = accounts.get(toAccountNumber);
 
+        // Check sender balance before withdrawal
+        if(amount > sender.possibleWithdraw()) {
+            throw new IllegalArgumentException("Insufficient balance");
+        }
+
+
         if(!sender.withdraw(amount)) {
-            return false;
+            throw new IllegalArgumentException("Transfer failed");
         }
 
         if(receiver.deposit(amount)) {
             addTransaction(fromAccountNumber, amount, TRANSFER_SENDER);
-            addTransaction(toAccountNumber, amount, TRANSFER_RECEIVER);
+            addTransaction(toAccountNumber, amount,TRANSFER_RECEIVER);
             return true;
         }
-        
-        sender.deposit(amount); // rollback if transaction fails
-        return false;
+
+
+        // Rollback if receiver deposit fails
+        if(!sender.deposit(amount)) {
+            throw new IllegalStateException("Rollback failed. Contact ADMIN.");
+        }
+
+        throw new IllegalArgumentException("Transfer failed. Amount returned to sender");
     }
 
     /**
