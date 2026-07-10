@@ -263,6 +263,27 @@ public class Bank {
     }
 
     /**
+     * Returns all transactions sorted from latest to oldest.
+     *
+     * @return list of all transactions
+     */
+    public List<Transaction> getAllTransactions() {
+
+        List<Transaction> transactions = new ArrayList<>();
+
+        for(List<Transaction> list : transactionHistory.values()) {
+            transactions.addAll(list);
+        }
+
+        // Sort transactions by date and time
+        // Using Lambda expression to sort
+        transactions.sort((t1, t2) ->
+                t2.getTime().compareTo(t1.getTime()));
+
+        return transactions;
+    }
+
+    /**
      * To give all the transaction history of a particular account
      * 
      * @param accountNumber account number of the account

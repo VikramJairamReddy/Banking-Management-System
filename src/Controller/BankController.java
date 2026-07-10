@@ -116,6 +116,15 @@ public class BankController {
     }
 
     /**
+     * Returns all transactions in the bank.
+     *
+     * @return list of all transactions
+     */
+    public List<Transaction> getAllTransactions() {
+        return bank.getAllTransactions();
+    }
+
+    /**
      * Requests a list of transaction history of a particular account.
      * 
      * @param accountNumber account number
