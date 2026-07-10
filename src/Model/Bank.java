@@ -22,8 +22,7 @@ public class Bank {
 
     private static final String DEPOSIT = "Deposit";
     private static final String WITHDRAW = "Withdraw";
-    private static final String TRANSFER_SENDER = "Transfer Sender";
-    private static final String TRANSFER_RECEIVER = "Transfer Receiver";
+    private static final String TRANSFER = "Transfer";
     private static final double INTEREST_RATE = 6.0;
 
     private long nextAccountNumber;
@@ -77,7 +76,6 @@ public class Bank {
         }
 
         accounts.remove(accountNumber);
-        transactionHistory.remove(accountNumber);
         return true;
     }
     
@@ -154,7 +152,8 @@ public class Bank {
         Account account = accounts.get(accountNumber);
     
         if(account.deposit(amount)) {
-            addTransaction(accountNumber, amount, DEPOSIT);
+            addTransaction(generateTransactionId(), accountNumber, null, 
+                            amount, DEPOSIT);
             return true;
         }
     
@@ -185,7 +184,8 @@ public class Bank {
         }
     
         if(account.withdraw(amount)) {
-            addTransaction(accountNumber, amount, WITHDRAW);
+            addTransaction(generateTransactionId(), accountNumber, null, 
+                            amount, WITHDRAW);
             return true;
         }
     
@@ -194,6 +194,7 @@ public class Bank {
 
     /**
      * Transfers money between two accounts.
+     * The same transaction ID is stored
      *
      * @param fromAccountNumber source account number
      * @param toAccountNumber destination account number
@@ -232,8 +233,10 @@ public class Bank {
         }
 
         if(receiver.deposit(amount)) {
-            addTransaction(fromAccountNumber, amount, TRANSFER_SENDER);
-            addTransaction(toAccountNumber, amount,TRANSFER_RECEIVER);
+            long transactionId = generateTransactionId();
+
+            addTransaction(transactionId, fromAccountNumber, toAccountNumber, amount, TRANSFER);
+            addTransaction(transactionId, toAccountNumber, fromAccountNumber, amount, TRANSFER);
             return true;
         }
 
@@ -250,16 +253,19 @@ public class Bank {
      * Records a transaction in the account's history.
      *
      * @param accountNumber associated account
+     * @param secondAccountNumber other account involved in transfer
      * @param amount transaction amount
      * @param type transaction type
      */
-    public void addTransaction(String accountNumber, double amount, String transactionType) {
-        if(transactionHistory.get(accountNumber) == null) {
+    public void addTransaction(long id, String accountNumber, String secondAccountNumber, 
+                                double amount, String transactionType) {
+        if(transactionHistory.containsKey(accountNumber)) {
             transactionHistory.put(accountNumber, new ArrayList<>());
         }
 
         transactionHistory.get(accountNumber)
-            .add(new Transaction(generateTransactionId(), accountNumber, transactionType, amount));
+            .add(new Transaction(id, accountNumber, secondAccountNumber,
+                                        transactionType, amount));
     }
 
     /**
@@ -269,11 +275,19 @@ public class Bank {
      */
     public List<Transaction> getAllTransactions() {
 
-        List<Transaction> transactions = new ArrayList<>();
+        Map<Long, Transaction> uniqueTransactions = new HashMap<>();
 
         for(List<Transaction> list : transactionHistory.values()) {
-            transactions.addAll(list);
+            for(Transaction transaction : list) {
+                if(uniqueTransactions.containsKey(transaction.getTransactionId())) {
+                    continue;
+                }
+                uniqueTransactions.put(transaction.getTransactionId(), transaction);
+            }
         }
+
+        List<Transaction> transactions =
+                new ArrayList<>(uniqueTransactions.values());
 
         // Sort transactions by date and time
         // Using Lambda expression to sort
@@ -290,8 +304,15 @@ public class Bank {
      * @return the list of all the Transaction made
      */
     public List<Transaction> getTransactionHistory(String accountNumber) {
-        return (transactionHistory.containsKey(accountNumber))?
-        new ArrayList<>(transactionHistory.get(accountNumber)) : new ArrayList<>();
+
+        List<Transaction> transactions =
+            transactionHistory.containsKey(accountNumber)? 
+                        new ArrayList<>(transactionHistory.get(accountNumber)): new ArrayList<>();
+
+        transactions.sort((t1, t2) ->
+                t2.getTime().compareTo(t1.getTime()));
+
+        return transactions;
     }
 
     /**
@@ -304,11 +325,9 @@ public class Bank {
         int count = 0;
         LocalDate today = LocalDate.now();
 
-        for(List<Transaction> list : transactionHistory.values()) {
-            for(Transaction t : list) {
-                if(t.getTime().toLocalDate().equals(today)) {
-                    count++;
-                }
+        for(Transaction t : getAllTransactions()) {
+            if(t.getTime().toLocalDate().equals(today)) {
+                count++;
             }
         }
 
