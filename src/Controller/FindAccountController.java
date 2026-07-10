@@ -44,7 +44,7 @@ public class FindAccountController {
      *
      * @param searchValue the value to search for (either account number or customer name)
      */
-    public void searchAccount() {
+    private void searchAccount() {
         String searchType = findAccountFrame.getSearchType();
         String searchValue = findAccountFrame.getSearchValue();
 
@@ -108,7 +108,7 @@ public class FindAccountController {
     /**
      * Closes the FindAccountFrame and AccountResultFrame, and shows the Dashboard.
      */
-    public void closeWindow() {
+    private void closeWindow() {
         dashboard.refreshDashboard();
         dashboard.showDashboard(true);
         findAccountFrame.dispose();
