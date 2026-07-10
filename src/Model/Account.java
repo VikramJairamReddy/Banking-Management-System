@@ -23,6 +23,13 @@ public abstract class Account {
      */
     public abstract String getAccountType();
 
+    /**
+    * Returns the maximum amount that can be withdrawn from this account.
+    *
+    * @return maximum withdrawable amount
+    */
+    public abstract double possibleWithdraw();
+
     private final String ACCOUNT_NUMBER;
     private String accountHolderName;
     private double balance = 0;

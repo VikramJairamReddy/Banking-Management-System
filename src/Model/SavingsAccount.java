@@ -17,6 +17,16 @@ public class SavingsAccount extends Account {
     }
 
     /**
+     * Returns the maximum amount that can still be withdrawn,
+     * taking the overdraft limit into count.
+     *
+     * @return available withdrawal amount
+     */
+    public double possibleWithdraw() {
+        return getBalance();
+    }
+
+    /**
      * Calculates and deposits interest based on the current account balance and interest rate.
      */
     public void addInterest() {
