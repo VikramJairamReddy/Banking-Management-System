@@ -66,8 +66,8 @@ src/
 
 ## Future Enhancements
 
-- Remove account functionality
-- Database (MySQL/SQLite)
+- Remove account function
+- Database - MySQL
 - Transaction search and filters
 - Account editing
 - Interest calculation automation

@@ -15,8 +15,6 @@ package Controller;
 import Model.Bank;
 import View.DashboardFrame;
 
-import javax.swing.*;
-
 public class DashboardController {
 
     private static final String DEPOSIT = "Deposit";
@@ -80,7 +78,7 @@ public class DashboardController {
     }
 
     private void transactions() {
-        JOptionPane.showMessageDialog(dashboard, "Transaction history clicked");
+        new TransactionHistoryController(bankController, this);
     }
 
     /**
