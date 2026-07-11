@@ -24,6 +24,7 @@ public class Bank {
     private static final String WITHDRAW = "Withdraw";
     private static final String TRANSFER = "Transfer";
     private static final double INTEREST_RATE = 6.0;
+    private static Bank instance;
 
     private long nextAccountNumber;
     private long transactionId ;
@@ -31,7 +32,7 @@ public class Bank {
     private final Map<String, Account> accounts;
     private final Map<String, List<Transaction>> transactionHistory;
 
-    public Bank() {
+    private Bank() {
         accounts = new HashMap<>();
         transactionHistory = new HashMap<>();
         nextAccountNumber = 100001;
@@ -376,5 +377,14 @@ public class Bank {
      */
     public static double getInterestRate() {
         return INTEREST_RATE;
+    }
+
+    public static Bank getInstance() {
+
+        if(instance == null) {
+            instance = new Bank();
+        }
+
+        return instance;
     }
 }

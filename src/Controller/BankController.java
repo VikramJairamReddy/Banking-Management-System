@@ -14,8 +14,8 @@ public class BankController {
 
     private Bank bank;
 
-    public BankController(Bank bank) {
-        this.bank = bank;
+    public BankController() {
+        this.bank = Bank.getInstance();
     }
 
     // -------- ACCOUNT --------
@@ -143,5 +143,23 @@ public class BankController {
      */
     public String generateAccountNumber() {
         return bank.generateAccountNumber();
+    }
+
+    /**
+     * return the total number of accounts stored.
+     *
+     * @return total number of Accounts
+     */
+    public int getNumberOfAccounts() {
+        return bank.getNumberOfAccounts();
+    }
+
+    /**
+     * Returns the number of transactions that occurred today.
+     *
+     * @return count of today's transactions
+     */
+    public int getTodayTransactionCount() {
+        return bank.getTodayTransactionCount();
     }
 }

@@ -12,8 +12,8 @@
 
 package Controller;
 
-import Model.Bank;
 import View.DashboardFrame;
+import View.LoginFrame;
 
 public class DashboardController {
 
@@ -23,7 +23,6 @@ public class DashboardController {
 
     private final DashboardFrame dashboard;
     private final BankController bankController;
-    private final Bank bank;
 
     /**
      * Creates dashboard controller
@@ -31,11 +30,10 @@ public class DashboardController {
      * @param employeeName logged-in employee name
      * @param bank shared Bank object
      */
-    public DashboardController(String employeeName, Bank bank) {
+    public DashboardController(String employeeName, BankController bankController) {
 
-        this.bank = bank;
         this.dashboard = new DashboardFrame(employeeName);
-        this.bankController = new BankController(bank);
+        this.bankController = bankController;
 
         update();
 
@@ -86,7 +84,8 @@ public class DashboardController {
      */
     private void logout() {
         dashboard.dispose();
-        new LoginController();
+        LoginFrame loginFrame = new LoginFrame();
+        new LoginController(loginFrame, bankController);
     }
 
     /**
@@ -96,8 +95,8 @@ public class DashboardController {
      * which are displayed on the dashboard.
      */
     private void update() {
-        dashboard.setTotalAccounts(bank.getNumberOfAccounts());
-        dashboard.setTotalTransactions(bank.getTodayTransactionCount());
+        dashboard.setTotalAccounts(bankController.getNumberOfAccounts());
+        dashboard.setTotalTransactions(bankController.getTodayTransactionCount());
     }
 
     /**

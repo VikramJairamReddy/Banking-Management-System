@@ -8,7 +8,6 @@
 package Controller;
 
 import Model.LoginModel;
-import Model.Bank;
 import View.LoginFrame;
 
 import javax.swing.*;
@@ -17,13 +16,13 @@ public class LoginController {
 
     private LoginFrame frame;
     private LoginModel model;
-    private Bank bank;
+    private BankController bankController;
 
-    public LoginController() {
+    public LoginController(LoginFrame frame, BankController bankController) {
 
-        frame = new LoginFrame();
+        this.frame = frame;
         model = new LoginModel();
-        bank = new Bank();
+        this.bankController = bankController;
 
         // Adding listener to the Login button
         frame.getLoginButton().addActionListener(e -> login());
@@ -43,10 +42,10 @@ public class LoginController {
         try{
             if(model.isValidLogin(username, password)) {
 
-                this.frame.dispose(); // close login window
+                this.frame.dispose(); // close login windsssow
 
                 // Open dashboard controller
-                new DashboardController(model.getUsername(), bank);
+                new DashboardController(model.getUsername(), bankController);
             } 
             else {
                 frame.resetPasswordField();

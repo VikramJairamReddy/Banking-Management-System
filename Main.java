@@ -9,7 +9,9 @@
  * @author Ganta Vikram Jairam Reddy 
  */
 
+import Controller.BankController;
 import Controller.LoginController;
+import View.LoginFrame;
 
 import javax.swing.SwingUtilities;
 
@@ -17,7 +19,9 @@ public class Main {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater(() -> {
-            new LoginController();
+            BankController bankController = new BankController();
+
+            new LoginController(new LoginFrame(), bankController);
         });
     }
 }
