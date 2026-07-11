@@ -72,7 +72,7 @@ public class CreateAccountController {
 
             Account account;
 
-            if(type.equals("Savings")) {
+            if("Savings".equals(type)) {
                 account = new SavingsAccount(accountNumber, name, phone, Bank.getInterestRate());
             } 
             else {
