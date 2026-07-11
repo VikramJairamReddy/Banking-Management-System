@@ -36,4 +36,13 @@ public class CurrentUser {
     public static void logout() {
         currentUser = null;
     }
+
+    /**
+     * Returns if any user logged-in or not
+     * 
+     * @return returns true if logged-in by any user, otherwise false
+     */
+    public static boolean isLoggedIn() {
+        return currentUser != null;
+    }
 }

@@ -46,7 +46,7 @@ public class LoginController {
 
             if(user != null) {
                 CurrentUser.login(user);
-                new DashboardController(user.getUsername(), bankController);
+                new DashboardController(user.getUsername().toUpperCase(), bankController);
                 frame.dispose();
 
             }

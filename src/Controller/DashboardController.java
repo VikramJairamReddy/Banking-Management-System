@@ -12,6 +12,7 @@
 
 package Controller;
 
+import Model.CurrentUser;
 import View.DashboardFrame;
 import View.LoginFrame;
 
@@ -83,6 +84,7 @@ public class DashboardController {
      * Logs out of the current employee and returns to the login window.
      */
     private void logout() {
+        CurrentUser.logout();
         dashboard.dispose();
         LoginFrame loginFrame = new LoginFrame();
         new LoginController(loginFrame, bankController);
