@@ -3,7 +3,7 @@
  * action buttons and updating the dashboard statistics.
  *
  * Responsibilities:
- * - Handles events of dashboard button.
+ * - Handles events of dashboard buttons.
  * - Updates account and transaction statistics.
  * - Opens the login window after logout.
  * 
@@ -11,6 +11,8 @@
  */ 
 
 package Controller;
+
+import javax.swing.JOptionPane;
 
 import Model.CurrentUser;
 import View.DashboardFrame;
@@ -36,6 +38,7 @@ public class DashboardController {
         this.dashboard = new DashboardFrame(employeeName);
         this.bankController = bankController;
 
+        applyPermissions();
         update();
 
         // adding listeners to the action buttons
@@ -57,26 +60,83 @@ public class DashboardController {
      * user input, account creation logic, and updates the bank model.
      */
     private void createAccount() {
+        if(!PermissionManager.canCreateAccount()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
+
         new CreateAccountController(bankController, this);
     }
 
+    /**
+     * Opens the Find Account window for searching an account
+     * by account number or account holder name.
+     *
+     * This method launches the FindAccountController, which handles
+     * account search logic and displays account details.
+     */
     private void findAccount() {
+        if(!PermissionManager.canViewAccounts()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
+
         new FindAccountController(bankController, this);
     }
 
+    /**
+     * Opens the transaction window for depositing money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void deposit() {
+        if(!PermissionManager.canDeposit()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
         new TransactionController(DEPOSIT, bankController, this);
     }
 
+    /**
+     * Opens the transaction window for withdrawing money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void withdraw() {
+        if(!PermissionManager.canWithdraw()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
        new TransactionController(WITHDRAW, bankController, this);
     }
 
+    /**
+     * Opens the transaction window for transferring money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void transfer() {
+        if(!PermissionManager.canTransfer()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
         new TransactionController(TRANSFER, bankController, this);
     }
 
+    /**
+     * Opens the transaction history window for displaying all transactions.
+     * 
+     * This method launches the TransactionHistoryController, which handles
+     * displaying all the data
+     */
     private void transactions() {
+        if(!PermissionManager.canViewTransactions()) {
+            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            return;
+        }
         new TransactionHistoryController(bankController, this);
     }
 
@@ -115,5 +175,20 @@ public class DashboardController {
      */
     public void showDashboard(boolean value) {
         dashboard.setVisible(value);
+    }
+
+    /**
+     * Controls dashboard features based on the user's role.
+     *
+     * Buttons are visible or hidden depending on the permissions of the logged-in user.
+     */
+    private void applyPermissions() {
+
+        dashboard.getCreateAccountButton().setVisible(PermissionManager.canCreateAccount());
+        dashboard.getFindAccountButton().setVisible(PermissionManager.canViewAccounts());
+        dashboard.getDepositButton().setVisible(PermissionManager.canDeposit());
+        dashboard.getWithdrawButton().setVisible(PermissionManager.canWithdraw());
+        dashboard.getTransferButton().setVisible(PermissionManager.canTransfer());
+        dashboard.getTransactionButton().setVisible(PermissionManager.canViewTransactions());
     }
 }

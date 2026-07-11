@@ -106,7 +106,7 @@ public class PermissionManager {
      *
      * @return true if user has permission, otherwise false
      */
-    public static boolean canViewAllAccounts() {
+    public static boolean canViewAccounts() {
         return isAdmin() || isManager();
     }
 
