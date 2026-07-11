@@ -259,7 +259,12 @@ public class Bank {
      */
     public void addTransaction(long id, String accountNumber, String secondAccountNumber, 
                                 double amount, String transactionType) {
-        if(transactionHistory.containsKey(accountNumber)) {
+
+        if(accountNumber == null) {
+            throw new IllegalArgumentException("Account number cannot be null");
+        }
+
+        if(!transactionHistory.containsKey(accountNumber)) {
             transactionHistory.put(accountNumber, new ArrayList<>());
         }
 
