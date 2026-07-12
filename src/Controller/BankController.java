@@ -131,6 +131,9 @@ public class BankController {
      * @return List of all transactions
      * */
     public List<Transaction> getTransactionHistory(String accountNumber) {
+        if(!bank.accountExists(accountNumber)) {
+            throw new IllegalArgumentException("Account does not exist");
+        }
         return bank.getTransactionHistory(accountNumber);
     }
 
