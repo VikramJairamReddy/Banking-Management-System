@@ -275,7 +275,7 @@ public class Bank {
     }
 
     /**
-     * Returns all transactions sorted from latest to oldest.
+     * Returns all transactions
      *
      * @return list of all transactions
      */
@@ -292,15 +292,28 @@ public class Bank {
             }
         }
 
-        List<Transaction> transactions =
-                new ArrayList<>(uniqueTransactions.values());
+        return new ArrayList<>(uniqueTransactions.values());
+    }
 
-        // Sort transactions by date and time
-        // Using Lambda expression to sort
-        transactions.sort((t1, t2) ->
-                t2.getTime().compareTo(t1.getTime()));
+    /**
+     * searches transactions based on the provided search term.
+     *
+     * @return list of transactions matching the search term
+     */
+    public List<Transaction> searchTransactions(String searchTerm) {
 
-        return transactions;
+        List<Transaction> list = new ArrayList<>();
+    
+        for(Transaction transaction : getAllTransactions()) {
+            if(String.valueOf(transaction.getTransactionId()).contains(searchTerm) ||
+               transaction.getAccountNumber().contains(searchTerm) ||
+               transaction.getTime().toString().contains(searchTerm)) {
+    
+                    list.add(transaction);
+            }
+        }
+    
+        return list;
     }
 
     /**

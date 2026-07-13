@@ -137,6 +137,16 @@ public class BankController {
         return bank.getTransactionHistory(accountNumber);
     }
 
+    /**
+     * Searches transactions based on the provided search term.
+     * 
+     * @param searchTerm value used to search transactions
+     * @return list of transactions matching the search term
+     */
+    public List<Transaction> searchTransactions(String searchTerm) {
+        return bank.searchTransactions(searchTerm);
+    }
+
     // -------- ID GENERATION --------
 
     /**
