@@ -38,7 +38,7 @@ public class TransactionHistoryFrame extends JFrame {
     public TransactionHistoryFrame() {
 
         setTitle("Transactions");
-        setSize(750, 600);
+        setSize(950, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
