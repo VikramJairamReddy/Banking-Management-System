@@ -7,6 +7,7 @@
  * - Formats transaction data for display.
  * - Applies transaction type filters and sorting options.
  * - Resets all search and filter options to their default values.
+ * - Displays detailed information when a transaction is double-clicked.
  * - Displays the transaction history in the view.
  * - Returns to the dashboard when the Back button is pressed.
  *
@@ -25,6 +26,8 @@ import java.util.ArrayList;
 import javax.swing.event.DocumentListener;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 
 public class TransactionHistoryController {
     
@@ -55,6 +58,25 @@ public class TransactionHistoryController {
         historyFrame.getResetButton().addActionListener(e -> resetFilters());
         historyFrame.getBackButton().addActionListener(e -> closeWindow());
 
+        /**
+         * Adds a mouse listener to the transaction table.
+         *
+         * Displays transaction details when a user double-clicks a transaction record.
+         */
+        historyFrame.getHistoryTable().addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    int row = historyFrame.getHistoryTable().getSelectedRow();
+
+                    if(row != -1) {
+                        historyFrame.showDetails(getTransactionDetails(row));
+                    }
+                }
+            }
+        });
+
         addSearchListener();
         loadAllTransactions();
 
@@ -62,7 +84,8 @@ public class TransactionHistoryController {
     }
 
     /**
-     * generates a formatted string containing the transactions details.
+     * Displays transaction records in the table.
+     * Clears existing rows and adds the provided transaction data.
      *
      * @param transactions transactions list of transactions to format
      * @return formatted transaction history, or a message if no
@@ -226,7 +249,7 @@ public class TransactionHistoryController {
      * Resets all search and filter options to their default values.
      * This method clears the search field, sets the transaction type filter to "All",
      * and sets the sort option to "Newest First".
-     * Finally Reloads all transactions.
+     * Finally Reloads all transactions using the default settings
      */
     private void resetFilters() {
         selectedTransactionType = "All";
@@ -236,6 +259,23 @@ public class TransactionHistoryController {
         historyFrame.getSearchTypeBox().setSelectedIndex(0);
     
         loadAllTransactions();
+    }
+
+    /**
+     * Creates a formatted string containing detailed information
+     * about the selected transaction.
+     *
+     * @param row selected transaction row
+     * @return formatted transaction details
+    **/
+    private String getTransactionDetails(int row) {
+        return
+            "Transaction ID.   : " + historyFrame.getHistoryTable().getValueAt(row, 0) +
+            "\nTransaction Type  : " + historyFrame.getHistoryTable().getValueAt(row, 1) +
+            "\nAccount Number.   : " + historyFrame.getHistoryTable().getValueAt(row, 2) +
+            "\nTarget Account.   : " + historyFrame.getHistoryTable().getValueAt(row, 3) +
+            "\nAmount            : " + historyFrame.getHistoryTable().getValueAt(row, 4) +
+            "\nDate              : " + historyFrame.getHistoryTable().getValueAt(row, 5);
     }
 
     /**

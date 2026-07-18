@@ -7,6 +7,7 @@
  * - Provides transaction type filtering.
  * - Provides sorting options by transaction date.
  * - Maintains selected filter and sorting preferences.
+ * - Displays detailed information for selected transactions
  * - Allows users to reset search and filter options.
  *
  * @author Ganta Vikram Jairam Reddy
@@ -187,6 +188,16 @@ public class TransactionHistoryFrame extends JFrame {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Displays transaction details in a message dialog.
+     *
+     * @param details formatted transaction information
+     */
+    public void showDetails(String details) {
+        JOptionPane.showMessageDialog(this, details, "Transaction Details",
+                    JOptionPane.INFORMATION_MESSAGE);
     }
 
     // ---------- Getters ----------
