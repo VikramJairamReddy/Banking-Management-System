@@ -9,11 +9,16 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Create Savings and Checking accounts
 - Deposit and withdraw funds
 - Transfer money between accounts
+- Search transactions by account number, transaction ID, and date
+- Filter transactions by transaction type
+- Sort transactions by newest or oldest
+- Reset transaction search and filter options
+- View detailed transaction information through double-click
 - Search accounts by name or account number
-- View complete transaction history
 - Unique account number generation
 - Unique transaction ID generation
 - Input validation and exception handling
+- Single bank instance for maintaining application data
 
 ## Technologies
 
@@ -39,8 +44,8 @@ src/
 │   ├── BankController.java
 │   ├── CreateAccountController.java
 │   ├── DashboardController.java
+│   ├── FindAccountController.java
 │   ├── LoginController.java
-│   ├── SearchAccountController.java
 │   ├── TransactionController.java
 │   └── TransactionHistoryController.java
 │
@@ -54,10 +59,11 @@ src/
 │   └── Validate.java
 │
 ├── View/
+    ├── AccountResultFrame.java
 │   ├── CreateAccountFrame.java
 │   ├── DashboardFrame.java
+│   ├── FindAccountFrame.java
 │   ├── LoginFrame.java
-│   ├── SearchAccountFrame.java
 │   ├── TransactionFrame.java
 │   └── TransactionHistoryFrame.java
 │
@@ -68,9 +74,8 @@ src/
 
 - Remove account function
 - Database - MySQL
-- Transaction search and filters
 - Account editing
-- Interest calculation automation
+- Interest calculation
 - Role-based access control (Admin, Employee, Manager)
 
 ## Author
