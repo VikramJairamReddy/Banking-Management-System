@@ -1,12 +1,13 @@
 /**
  * Displays transaction history of accounts.
  *
- * Allows users to search transactions by:
- * - Account Number
- * - Transaction ID
- * - Date
- *
- * Provides options for filtering and sorting transactions.
+ * Features:
+ * - Searches transactions by account number, transaction ID, and date.
+ * - Displays transaction records in a table format.
+ * - Provides transaction type filtering.
+ * - Provides sorting options by transaction date.
+ * - Maintains selected filter and sorting preferences.
+ * - Allows users to reset search and filter options.
  *
  * @author Ganta Vikram Jairam Reddy
  */
@@ -33,8 +34,8 @@ public class TransactionHistoryFrame extends JFrame {
 
     private JLabel resultLabel;
 
-    private String selectedTransactionType;
-    private String selectedSortOption;
+    private String selectedTransactionType = "All";
+    private String selectedSortOption = "Newest First";
 
     public TransactionHistoryFrame() {
 
@@ -65,7 +66,7 @@ public class TransactionHistoryFrame extends JFrame {
         searchField = new JTextField(20);
 
         filterButton = new JButton("Filter");
-        buttonAppearance(filterButton,Color.DARK_GRAY);
+        buttonAppearance(filterButton, new Color(41, 112, 204));
 
         formPanel.add(searchTypeBox);
         formPanel.add(searchField);
@@ -126,11 +127,11 @@ public class TransactionHistoryFrame extends JFrame {
         JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT,15,10));
 
         resetButton = new JButton("Reset");
-        buttonAppearance(resetButton, Color.ORANGE);
+        buttonAppearance(resetButton, Color.GRAY);
         backPanel.add(resetButton);
-        
+
         backButton = new JButton("Back");
-        buttonAppearance(backButton, Color.GRAY);
+        buttonAppearance(backButton, Color.DARK_GRAY);
         backPanel.add(backButton);
 
         buttonPanel.add(backPanel, BorderLayout.EAST);
@@ -153,15 +154,20 @@ public class TransactionHistoryFrame extends JFrame {
 
     /**
      * Allows users to select transaction type and sorting options.
-     *
+     * The dialog displays the previously selected filter values.
      * The selected filter values are stored and can be accessed using getter methods.
      *
+     * @param selectedTransactionType current transaction type filter
+    *  @param selectedSort current sorting option
      * @return true if the user applies the filter, if this is cancelled it returns false
      */
-    public boolean showFilter() {
+    public boolean showFilter(String currTransactionType, String currSelectedSort) {
 
         JComboBox<String> typeBox = new JComboBox<>(new String[]{"All", "Deposit","Withdraw","Transfer"});
         JComboBox<String> sortBox = new JComboBox<>(new String[]{"Newest First", "Oldest First"});
+
+        typeBox.setSelectedItem((currTransactionType != null)? currTransactionType : "All");
+        sortBox.setSelectedItem((currSelectedSort != null)? currSelectedSort : "Newest First");
     
         JPanel panel = new JPanel(new GridLayout(2,2,10,10));
 

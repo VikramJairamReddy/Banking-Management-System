@@ -153,14 +153,26 @@ public class TransactionHistoryController {
 
     /**
      * Adds an action listener to the filter button.
-     * Opens the filter dialog, stores the selected options, and refreshes the transaction table.
+     * Opens the filter dialog with the current filter selections, 
+     * stores the selected options after applying, and refreshes the transaction table.
      */
     private void addFilterListener() {
         historyFrame.getFilterButton().addActionListener(e -> {
 
-            if(historyFrame.showFilter()) {
+            if(historyFrame.showFilter(selectedTransactionType, selectedSort)) {
+
                 selectedTransactionType = historyFrame.getSelectedTransactionType();
+
+                if(selectedTransactionType == null) {
+                    selectedTransactionType = "All";
+                }
+                
                 selectedSort = historyFrame.getSelectedSortOption();
+
+                if(selectedSort == null) {
+                    selectedSort = "Newest First";
+                }
+
                 searchTransaction();
             }
         });
