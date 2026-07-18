@@ -27,6 +27,7 @@ public class TransactionHistoryFrame extends JFrame {
 
     private JButton backButton;
     private JButton filterButton;
+    private JButton resetButton;
 
     private JComboBox<String> searchTypeBox;
 
@@ -123,6 +124,11 @@ public class TransactionHistoryFrame extends JFrame {
         buttonPanel.add(resultLabel, BorderLayout.CENTER);
 
         JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT,15,10));
+
+        resetButton = new JButton("Reset");
+        buttonAppearance(resetButton, Color.ORANGE);
+        backPanel.add(resetButton);
+        
         backButton = new JButton("Back");
         buttonAppearance(backButton, Color.GRAY);
         backPanel.add(backButton);
@@ -195,6 +201,15 @@ public class TransactionHistoryFrame extends JFrame {
      */
     public JButton getFilterButton() {
         return filterButton;
+    }
+
+    /**
+     * Returns the Reset Button so that the controller can add an action listener to it.
+     *
+     * @return the Reset Button
+     */
+    public JButton getResetButton() {
+        return resetButton;
     }
 
     /**

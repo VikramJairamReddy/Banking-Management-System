@@ -6,6 +6,7 @@
  * - Searches transactions based on user-selected options: Account number, transaction id, and date
  * - Formats transaction data for display.
  * - Applies transaction type filters and sorting options.
+ * - Resets all search and filter options to their default values.
  * - Displays the transaction history in the view.
  * - Returns to the dashboard when the Back button is pressed.
  *
@@ -51,6 +52,7 @@ public class TransactionHistoryController {
 
         addFilterListener();
         historyFrame.getSearchTypeBox().addActionListener(e -> searchTransaction());
+        historyFrame.getResetButton().addActionListener(e -> resetFilters());
         historyFrame.getBackButton().addActionListener(e -> closeWindow());
 
         addSearchListener();
@@ -206,6 +208,22 @@ public class TransactionHistoryController {
         }
 
         return filteredTransactions;
+    }
+
+    /**
+     * Resets all search and filter options to their default values.
+     * This method clears the search field, sets the transaction type filter to "All",
+     * and sets the sort option to "Newest First".
+     * Finally Reloads all transactions.
+     */
+    private void resetFilters() {
+        selectedTransactionType = "All";
+        selectedSort = "Newest First";
+    
+        historyFrame.getSearchField().setText("");
+        historyFrame.getSearchTypeBox().setSelectedIndex(0);
+    
+        loadAllTransactions();
     }
 
     /**
