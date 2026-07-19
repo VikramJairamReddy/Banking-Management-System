@@ -184,11 +184,11 @@ public class DashboardController {
      */
     private void applyPermissions() {
 
-        dashboard.getCreateAccountButton().setVisible(PermissionManager.canCreateAccount());
-        dashboard.getFindAccountButton().setVisible(PermissionManager.canViewAccounts());
-        dashboard.getDepositButton().setVisible(PermissionManager.canDeposit());
-        dashboard.getWithdrawButton().setVisible(PermissionManager.canWithdraw());
-        dashboard.getTransferButton().setVisible(PermissionManager.canTransfer());
-        dashboard.getTransactionButton().setVisible(PermissionManager.canViewTransactions());
+        dashboard.getCreateAccountButton().setEnabled(PermissionManager.canCreateAccount());
+        dashboard.getFindAccountButton().setEnabled(PermissionManager.canViewAccounts());
+        dashboard.getDepositButton().setEnabled(PermissionManager.canDeposit());
+        dashboard.getWithdrawButton().setEnabled(PermissionManager.canWithdraw());
+        dashboard.getTransferButton().setEnabled(PermissionManager.canTransfer());
+        dashboard.getTransactionButton().setEnabled(PermissionManager.canViewTransactions());
     }
 }

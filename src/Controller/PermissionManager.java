@@ -77,7 +77,7 @@ public class PermissionManager {
      * @return true if user has permission, otherwise false
      */
     public static boolean canWithdraw() {
-        return isAdmin() || isManager() || isEmployee();
+        return isAdmin() || isManager();
     }
 
     /**
@@ -87,7 +87,7 @@ public class PermissionManager {
      * @return true if user has permission, otherwise false
      */
     public static boolean canTransfer() {
-        return isAdmin() || isManager() || isEmployee();
+        return isAdmin() || isManager();
     }
 
 

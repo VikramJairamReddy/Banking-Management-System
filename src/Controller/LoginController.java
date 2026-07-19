@@ -51,7 +51,7 @@ public class LoginController {
 
             }
             else{
-
+                frame.resetPasswordField();
                 JOptionPane.showMessageDialog(frame,"Invalid username or password");
             }
         }
