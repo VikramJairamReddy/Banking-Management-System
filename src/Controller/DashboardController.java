@@ -44,6 +44,7 @@ public class DashboardController {
         dashboard.getWithdrawButton().addActionListener(e -> withdraw());
         dashboard.getTransferButton().addActionListener(e -> transfer());
         dashboard.getTransactionButton().addActionListener(e -> transactions());
+        dashboard.getManageButton().addActionListener(e -> manageAccount());
         dashboard.getLogoutButton().addActionListener(e -> logout());
 
         dashboard.setVisible(true);
@@ -77,6 +78,10 @@ public class DashboardController {
 
     private void transactions() {
         new TransactionHistoryController(bankController, this);
+    }
+
+    private void manageAccount() {
+
     }
 
     /**

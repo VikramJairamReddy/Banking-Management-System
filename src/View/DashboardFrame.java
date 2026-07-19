@@ -17,6 +17,7 @@ public class DashboardFrame extends JFrame {
 
     // Buttons for action buttons
     private JButton createAccountButton;
+    private JButton manageButton;
     private JButton findAccountButton;
     private JButton depositButton;
     private JButton withdrawButton;
@@ -45,9 +46,23 @@ public class DashboardFrame extends JFrame {
 
         setLayout(new BorderLayout());
 
-        // -------- TOP PANEL --------
+        // Adding dashboard sections
+        add(createTopPanel(employeeName), BorderLayout.NORTH);
+        add(createActionPanel(), BorderLayout.WEST);
+        add(createStatisticsPanel(), BorderLayout.CENTER);
+        add(createAdminPanel(), BorderLayout.SOUTH);
+    }
 
-        // Top panel that displays the title and employee information
+
+    /**
+     * Creates the top panel containing the application title,
+     * employee information, and logout button.
+     *
+     * @param employeeName logged-in employee name
+     * @return top panel
+     */
+    private JPanel createTopPanel(String employeeName) {
+
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
@@ -55,11 +70,10 @@ public class DashboardFrame extends JFrame {
         JLabel titleLabel = new JLabel("Banking Management System");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
-        // small panel to hold employee name and logout button
-        JPanel employeePanel = new JPanel();
-        employeePanel.setLayout(new BoxLayout(employeePanel, BoxLayout.X_AXIS));
+        // Employee information panel
+        JPanel employeePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
 
-        JLabel employeeLabel = new JLabel("Employee: ");
+        JLabel employeeLabel = new JLabel("Employee:");
         employeeLabel.setFont(new Font("Arial", Font.ITALIC, 18));
 
         JLabel usernameLabel = new JLabel(employeeName);
@@ -76,15 +90,19 @@ public class DashboardFrame extends JFrame {
         topPanel.add(titleLabel, BorderLayout.WEST);
         topPanel.add(employeePanel, BorderLayout.EAST);
 
-        // Add top panel to the frame
-        add(topPanel, BorderLayout.NORTH);
+        return topPanel;
+    }
 
-        // -------- LEFT PANEL --------
+    /**
+     * Creates the panel containing normal banking actions.
+     *
+     * @return action panel
+     */
+    private JPanel createActionPanel() {
 
-        //Left panel that contains action buttons
-        JPanel leftPanel = new JPanel();
-        leftPanel.setLayout(new GridLayout(6, 1, 10, 20));
-        leftPanel.setBorder(new EmptyBorder(30, 20, 30, 20));
+        JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new GridLayout(6, 1, 10, 15));
+        actionPanel.setBorder(new EmptyBorder(20, 40, 10, 20));
 
         createAccountButton = new JButton("Create Account");
         findAccountButton = new JButton("Find Account");
@@ -93,48 +111,100 @@ public class DashboardFrame extends JFrame {
         transferButton = new JButton("Transfer");
         transactionButton = new JButton("Transactions");
 
-        //Add buttons to the left panel
-        leftPanel.add(createAccountButton);
-        leftPanel.add(findAccountButton);
-        leftPanel.add(depositButton);
-        leftPanel.add(withdrawButton);
-        leftPanel.add(transferButton);
-        leftPanel.add(transactionButton);
+        buttonAppearance(createAccountButton, new Color(41, 112, 204));
+        buttonAppearance(findAccountButton, new Color(41, 112, 204));
+        buttonAppearance(depositButton, new Color(41, 112, 204));
+        buttonAppearance(withdrawButton, new Color(41, 112, 204));
+        buttonAppearance(transferButton, new Color(41, 112, 204));
+        buttonAppearance(transactionButton, new Color(41, 112, 204));
 
-        // Add left panel to the frame
-        add(leftPanel, BorderLayout.WEST);
+        //Add buttons to the action panel 
+        actionPanel.add(createAccountButton);
+        actionPanel.add(findAccountButton);
+        actionPanel.add(depositButton);
+        actionPanel.add(withdrawButton);
+        actionPanel.add(transferButton);
+        actionPanel.add(transactionButton);
 
-        // -------- CENTER PANEL --------
-
-        // Center panel that shows dashboard statistics
-        JPanel centrePanel = new JPanel();
-        centrePanel.setLayout(new GridLayout(5, 1, 40, 20));
-        centrePanel.setBorder(new EmptyBorder(50, 50, 50, 50));
-
-        // Total number of accounts label and value
-        totalAccountsLabel = new JLabel("Total Accounts: ");
-        totalAccountsCount = new JLabel("0");
-        totalAccountsLabel.setFont(new Font("Arial", Font.ITALIC, 20));
-        totalAccountsCount.setFont(new Font("Arial", Font.PLAIN, 16));
-
-        //Total transactions happened today, label and value
-        totalTransactionsLabel = new JLabel("Transactions Today:");
-        totalTransactionsCount = new JLabel("0");
-        totalTransactionsLabel.setFont(new Font("Arial", Font.ITALIC, 20));
-        totalTransactionsCount.setFont(new Font("Arial", Font.PLAIN, 16));
-
-        //Adding components to the center panel
-        centrePanel.add(totalAccountsLabel);
-        centrePanel.add(totalAccountsCount);
-        centrePanel.add(new JLabel());
-        centrePanel.add(totalTransactionsLabel);
-        centrePanel.add(totalTransactionsCount);
-
-        // Add center panel to the frame
-        add(centrePanel, BorderLayout.CENTER);
+        return actionPanel;
     }
 
-    // GETTERS of the Action Buttons so that the listener can be added
+    /**
+     * Creates the management panel.
+     *
+     * This panel contains account management actions.
+     * This is placed separately from normal banking operations 
+     * to prevent accidental clicks.
+     *
+     * @return admin panel
+     */
+    private JPanel createAdminPanel() {
+
+        JPanel adminPanel = new JPanel(new BorderLayout());
+        adminPanel.setBorder(new EmptyBorder(10, 20, 15, 20));
+
+        manageButton = new JButton("Manage Account");
+        manageButton.setPreferredSize(new Dimension(160, 40));
+        buttonAppearance(manageButton, new Color(12, 163, 159));
+
+        JPanel removePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        removePanel.add(manageButton);
+
+        adminPanel.add(removePanel, BorderLayout.EAST);
+
+        return adminPanel;
+    }
+
+    /**
+     * Creates the center panel containing dashboard statistics.
+     *
+     * @return statistics panel
+     */
+    private JPanel createStatisticsPanel() {
+
+        JPanel statisticsPanel = new JPanel();
+        statisticsPanel.setLayout(new GridLayout(5, 1, 20, 20));
+        statisticsPanel.setBorder(new EmptyBorder(50, 150, 50, 50));
+
+        // Total accounts label and value
+        totalAccountsLabel = new JLabel("Total Accounts:");
+        totalAccountsCount = new JLabel("0");
+        totalAccountsLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+        totalAccountsCount.setFont(new Font("Arial", Font.PLAIN, 18));
+
+        // Total transactions label and value
+        totalTransactionsLabel = new JLabel("Transactions Today:");
+        totalTransactionsCount = new JLabel("0");
+
+        totalTransactionsLabel.setFont(new Font("Arial", Font.ITALIC, 20));
+        totalTransactionsCount.setFont(new Font("Arial", Font.PLAIN, 18));
+
+        statisticsPanel.add(totalAccountsLabel);
+        statisticsPanel.add(totalAccountsCount);
+        statisticsPanel.add(new JLabel());
+        statisticsPanel.add(totalTransactionsLabel);
+        statisticsPanel.add(totalTransactionsCount);
+
+        return statisticsPanel;
+    }
+
+    /**
+     * Sets the appearance of buttons used in the dashboard.
+     *
+     * @param button button whose appearance will be modified
+     * @param color background color of the button
+     */
+    private void buttonAppearance(JButton button, Color color) {
+
+        button.setBackground(color);
+        button.setForeground(Color.WHITE);
+        button.setPreferredSize(new Dimension(150, 35));
+        button.setFocusPainted(false);
+        button.setBorderPainted(false);
+        button.setOpaque(true);
+    }
+
+    // ---------------- GETTERS ----------------
 
     /**
      * Returns the create account button so that listener can be added.
@@ -146,7 +216,19 @@ public class DashboardFrame extends JFrame {
     }
 
     /**
-     * Returns the find account button so that a listener can be added.
+     * Returns the manage account button.
+     * 
+     * This button opens account management features and is restricted
+     * using role-based permissions.
+     *
+     * @return manage account button
+     */
+    public JButton getManageButton() {
+        return manageButton;
+    }
+
+    /**
+     * Returns the find account button.
      *
      * @return the find account button
      */
@@ -199,7 +281,7 @@ public class DashboardFrame extends JFrame {
         return logoutButton;
     }
 
-    // SETTERS for displaying the correct number of accounts anf transaction history
+    // SETTERS for displaying the correct number of accounts and transaction history
 
     /**
      * Updates the total number of accounts shown on the dashboard.
