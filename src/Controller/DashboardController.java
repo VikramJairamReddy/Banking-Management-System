@@ -81,7 +81,7 @@ public class DashboardController {
     }
 
     private void manageAccount() {
-
+        new ManageAccountController(bankController, this);
     }
 
     /**
