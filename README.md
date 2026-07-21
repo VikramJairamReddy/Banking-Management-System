@@ -72,11 +72,9 @@ src/
 
 ## Future Enhancements
 
-- Remove account function
 - Database - MySQL
 - Account editing
 - Interest calculation
-- Role-based access control (Admin, Employee, Manager)
 
 ## Author
 Ganta Vikram Jairam Reddy
