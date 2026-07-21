@@ -3,7 +3,7 @@
  * action buttons and updating the dashboard statistics.
  *
  * Responsibilities:
- * - Handles events of dashboard button.
+ * - Handles events of dashboard buttons.
  * - Updates account and transaction statistics.
  * - Opens the login window after logout.
  * 
@@ -12,6 +12,10 @@
 
 package Controller;
 
+import javax.swing.JOptionPane;
+
+import Model.CurrentUser;
+import Model.Role;
 import View.DashboardFrame;
 import View.LoginFrame;
 
@@ -27,14 +31,16 @@ public class DashboardController {
     /**
      * Creates dashboard controller
      *
-     * @param employeeName logged-in employee name
+     * @param userName logged-in user name
+     * @param role logged-in user role
      * @param bank shared Bank object
      */
-    public DashboardController(String employeeName, BankController bankController) {
+    public DashboardController(String userName, Role role, BankController bankController) {
 
-        this.dashboard = new DashboardFrame(employeeName);
+        this.dashboard = new DashboardFrame(userName, role);
         this.bankController = bankController;
 
+        applyPermissions();
         update();
 
         // adding listeners to the action buttons
@@ -57,26 +63,83 @@ public class DashboardController {
      * user input, account creation logic, and updates the bank model.
      */
     private void createAccount() {
+        if(!PermissionManager.canCreateAccount()) {
+            showAccessDenied();
+            return;
+        }
+
         new CreateAccountController(bankController, this);
     }
 
+    /**
+     * Opens the Find Account window for searching an account
+     * by account number or account holder name.
+     *
+     * This method launches the FindAccountController, which handles
+     * account search logic and displays account details.
+     */
     private void findAccount() {
+        if(!PermissionManager.canViewAccounts()) {
+            showAccessDenied();
+            return;
+        }
+
         new FindAccountController(bankController, this);
     }
 
+    /**
+     * Opens the transaction window for depositing money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void deposit() {
+        if(!PermissionManager.canDeposit()) {
+            showAccessDenied();
+            return;
+        }
         new TransactionController(DEPOSIT, bankController, this);
     }
 
+    /**
+     * Opens the transaction window for withdrawing money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void withdraw() {
+        if(!PermissionManager.canWithdraw()) {
+            showAccessDenied();
+            return;
+        }
        new TransactionController(WITHDRAW, bankController, this);
     }
 
+    /**
+     * Opens the transaction window for transferring money.
+     * 
+     * This method launches the TransactionController, which handles
+     * user input, exceptional handling and updates the bank model.
+     */
     private void transfer() {
+        if(!PermissionManager.canTransfer()) {
+            showAccessDenied();
+            return;
+        }
         new TransactionController(TRANSFER, bankController, this);
     }
 
+    /**
+     * Opens the transaction history window for displaying all transactions.
+     * 
+     * This method launches the TransactionHistoryController, which handles
+     * displaying all the data
+     */
     private void transactions() {
+        if(!PermissionManager.canViewTransactions()) {
+            showAccessDenied();
+            return;
+        }
         new TransactionHistoryController(bankController, this);
     }
 
@@ -85,9 +148,10 @@ public class DashboardController {
     }
 
     /**
-     * Logs out of the current employee and returns to the login window.
+     * Logs out of the current user and returns to the login window.
      */
     private void logout() {
+        CurrentUser.logout();
         dashboard.dispose();
         LoginFrame loginFrame = new LoginFrame();
         new LoginController(loginFrame, bankController);
@@ -118,5 +182,30 @@ public class DashboardController {
      */
     public void showDashboard(boolean value) {
         dashboard.setVisible(value);
+    }
+
+    /**
+     * Controls dashboard features based on the user's role.
+     *
+     * Buttons are visible or hidden depending on the permissions of the logged-in user.
+     */
+    private void applyPermissions() {
+
+        dashboard.getCreateAccountButton().setEnabled(PermissionManager.canCreateAccount());
+        dashboard.getFindAccountButton().setEnabled(PermissionManager.canViewAccounts());
+        dashboard.getDepositButton().setEnabled(PermissionManager.canDeposit());
+        dashboard.getWithdrawButton().setEnabled(PermissionManager.canWithdraw());
+        dashboard.getTransferButton().setEnabled(PermissionManager.canTransfer());
+        dashboard.getTransactionButton().setEnabled(PermissionManager.canViewTransactions());
+    }
+
+    /**
+     * Displays access denied message when an user attempts
+     * to perform a task which is not allowed for their role.
+     */
+    private void showAccessDenied() {
+        JOptionPane.showMessageDialog(dashboard,
+            "You do not have permission to perform this action.","Access Denied",
+            JOptionPane.WARNING_MESSAGE);
     }
 }

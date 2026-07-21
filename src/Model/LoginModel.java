@@ -1,36 +1,42 @@
 /**
  * Represents the login model of the banking system.
- * Responsible for validating employee login credentials.
+ * Responsible for validating user login credentials.
  *
  * @author Ganta Vikram Jairam Reddy
  */
 
 package Model;
 
+import java.util.Map;
+import java.util.HashMap;
+
 public class LoginModel {
 
-    // Default employee username
-    private static final String USERNAME = "admin";
-
-    // Default employee password
-    private static final String PASSWORD = "admin12";
+    // Stores users with username as the key
+    private final Map<String, User> users;
+    
+    public LoginModel() {
+        users = new HashMap<>();
+    
+        users.put("admin", new User("admin", "admin12", Role.ADMIN));
+        users.put("manager", new User("manager", "manager12", Role.MANAGER));
+        users.put("employee", new User("employee", "employee12", Role.EMPLOYEE));
+    }
 
     /**
      * Validates the entered username and password against the stored login data.
      *
-     * @param username username entered by the employee
-     * @param password password entered by the employee
-     * @return true if the entered credentials are valid, otherwise false
+     * @param username username entered
+     * @param password password entered
+     * @return User object if the entered credentials are valid, otherwise null
      */
-    public boolean isValidLogin(String username, String password) {
-        if(username == null || password == null || username.trim().isEmpty() ||
-            password.length() < 3) {
-            throw new IllegalArgumentException("Invalid Username or Password");
-        }
-        return USERNAME.equals(username) && PASSWORD.equals(password);
-    }
+    public User validateLogin(String username, String password) {
+        User user = users.get(username);
 
-    public String getUsername(){
-        return USERNAME.toUpperCase();
+        if(user != null && user.checkPassword(password)) {
+            return user;
+        }
+
+        return null;
     }
 }

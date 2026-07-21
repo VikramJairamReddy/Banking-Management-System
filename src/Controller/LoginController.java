@@ -7,7 +7,9 @@
  */
 package Controller;
 
+import Model.CurrentUser;
 import Model.LoginModel;
+import Model.User;
 import View.LoginFrame;
 
 import javax.swing.*;
@@ -40,16 +42,17 @@ public class LoginController {
         String password = frame.getPassword();
 
         try{
-            if(model.isValidLogin(username, password)) {
+            User user = model.validateLogin(username, password);
 
-                this.frame.dispose(); // close login windsssow
+            if(user != null) {
+                CurrentUser.login(user);
+                new DashboardController(user.getUsername().toUpperCase(), user.getRole(), bankController);
+                frame.dispose();
 
-                // Open dashboard controller
-                new DashboardController(model.getUsername(), bankController);
-            } 
-            else {
+            }
+            else{
                 frame.resetPasswordField();
-                throw new IllegalArgumentException("Invalid Username or Password");
+                JOptionPane.showMessageDialog(frame,"Invalid username or password");
             }
         }
         catch(Exception e) {

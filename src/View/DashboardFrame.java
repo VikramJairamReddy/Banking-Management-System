@@ -1,7 +1,7 @@
 /**
  * DashboardFrame represents the main dashboard window for the Banking Management System.
  *
- * Displays employee information, action buttons, and 
+ * Displays user information, action buttons, and 
  * summary counts for total accounts and today's transactions.
  *
  * @author Ganta Vikram Jairam Reddy
@@ -9,6 +9,7 @@
 
 package View;
 
+import Model.Role;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
@@ -34,9 +35,10 @@ public class DashboardFrame extends JFrame {
     /**
      * Constructor that builds and displays the dashboard frame.
      *
-     * @param employeeName the name of the logged in employee
+     * @param userName the name of the logged in user
+     * @param role the role of the logged in user
      */
-    public DashboardFrame(String employeeName) {
+    public DashboardFrame(String userName, Role role) {
 
         setTitle("Banking Management System");
         setSize(700, 500);
@@ -47,7 +49,7 @@ public class DashboardFrame extends JFrame {
         setLayout(new BorderLayout());
 
         // Adding dashboard sections
-        add(createTopPanel(employeeName), BorderLayout.NORTH);
+        add(createTopPanel(userName, role), BorderLayout.NORTH);
         add(createActionPanel(), BorderLayout.WEST);
         add(createStatisticsPanel(), BorderLayout.CENTER);
         add(createAdminPanel(), BorderLayout.SOUTH);
@@ -61,8 +63,9 @@ public class DashboardFrame extends JFrame {
      * @param employeeName logged-in employee name
      * @return top panel
      */
-    private JPanel createTopPanel(String employeeName) {
+    private JPanel createTopPanel(String userName, Role role) {
 
+        // Top panel that displays title and user information
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
@@ -70,25 +73,33 @@ public class DashboardFrame extends JFrame {
         JLabel titleLabel = new JLabel("Banking Management System");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
 
-        // Employee information panel
-        JPanel employeePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+        // Panel for user information
+        JPanel userPanel = new JPanel();
+        userPanel.setLayout(new BoxLayout(userPanel, BoxLayout.Y_AXIS));
 
-        JLabel employeeLabel = new JLabel("Employee:");
-        employeeLabel.setFont(new Font("Arial", Font.ITALIC, 18));
+        JLabel userLabel = new JLabel("Logged in as: " + userName);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
-        JLabel usernameLabel = new JLabel(employeeName);
-        usernameLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel roleLabel = new JLabel("Role: " + role);
+        roleLabel.setFont(new Font("Arial", Font.PLAIN, 16));
 
+        userPanel.add(userLabel);
+        userPanel.add(roleLabel);
+
+        // Logout button
         logoutButton = new JButton("Logout");
 
-        //Add employee components into the employee panel
-        employeePanel.add(employeeLabel);
-        employeePanel.add(usernameLabel);
-        employeePanel.add(logoutButton);
+        // Right panel contains user info and logout
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 5));
+        rightPanel.add(userPanel);
+        rightPanel.add(logoutButton);
 
-        // Adding title and employee panel to the top panel
+        // Add components
         topPanel.add(titleLabel, BorderLayout.WEST);
-        topPanel.add(employeePanel, BorderLayout.EAST);
+        topPanel.add(rightPanel, BorderLayout.EAST);
+
+        // Add top panel
+        add(topPanel, BorderLayout.NORTH);
 
         return topPanel;
     }

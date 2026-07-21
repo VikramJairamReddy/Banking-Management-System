@@ -4,7 +4,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 
 ## Features
 
-- Secure employee login
+- Secure user login
 - Dashboard with banking statistics
 - Create Savings and Checking accounts
 - Deposit and withdraw funds
