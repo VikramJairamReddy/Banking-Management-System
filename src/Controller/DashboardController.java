@@ -15,6 +15,7 @@ package Controller;
 import javax.swing.JOptionPane;
 
 import Model.CurrentUser;
+import Model.Role;
 import View.DashboardFrame;
 import View.LoginFrame;
 
@@ -30,12 +31,13 @@ public class DashboardController {
     /**
      * Creates dashboard controller
      *
-     * @param employeeName logged-in employee name
+     * @param userName logged-in user name
+     * @param role logged-in user role
      * @param bank shared Bank object
      */
-    public DashboardController(String employeeName, BankController bankController) {
+    public DashboardController(String userName, Role role, BankController bankController) {
 
-        this.dashboard = new DashboardFrame(employeeName);
+        this.dashboard = new DashboardFrame(userName, role);
         this.bankController = bankController;
 
         applyPermissions();
@@ -61,7 +63,7 @@ public class DashboardController {
      */
     private void createAccount() {
         if(!PermissionManager.canCreateAccount()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
 
@@ -77,7 +79,7 @@ public class DashboardController {
      */
     private void findAccount() {
         if(!PermissionManager.canViewAccounts()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
 
@@ -92,7 +94,7 @@ public class DashboardController {
      */
     private void deposit() {
         if(!PermissionManager.canDeposit()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
         new TransactionController(DEPOSIT, bankController, this);
@@ -106,7 +108,7 @@ public class DashboardController {
      */
     private void withdraw() {
         if(!PermissionManager.canWithdraw()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
        new TransactionController(WITHDRAW, bankController, this);
@@ -120,7 +122,7 @@ public class DashboardController {
      */
     private void transfer() {
         if(!PermissionManager.canTransfer()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
         new TransactionController(TRANSFER, bankController, this);
@@ -134,14 +136,14 @@ public class DashboardController {
      */
     private void transactions() {
         if(!PermissionManager.canViewTransactions()) {
-            JOptionPane.showMessageDialog(dashboard,"Access denied");
+            showAccessDenied();
             return;
         }
         new TransactionHistoryController(bankController, this);
     }
 
     /**
-     * Logs out of the current employee and returns to the login window.
+     * Logs out of the current user and returns to the login window.
      */
     private void logout() {
         CurrentUser.logout();
@@ -190,5 +192,15 @@ public class DashboardController {
         dashboard.getWithdrawButton().setEnabled(PermissionManager.canWithdraw());
         dashboard.getTransferButton().setEnabled(PermissionManager.canTransfer());
         dashboard.getTransactionButton().setEnabled(PermissionManager.canViewTransactions());
+    }
+
+    /**
+     * Displays access denied message when an user attempts
+     * to perform a task which is not allowed for their role.
+     */
+    private void showAccessDenied() {
+        JOptionPane.showMessageDialog(dashboard,
+            "You do not have permission to perform this action.","Access Denied",
+            JOptionPane.WARNING_MESSAGE);
     }
 }
