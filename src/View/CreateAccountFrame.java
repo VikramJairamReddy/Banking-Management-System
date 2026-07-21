@@ -1,5 +1,5 @@
 /**
- * CreateAccount frame allows the employee to create a new bank account for a customer.
+ * CreateAccount frame allows the user to create a new bank account for a customer.
  *
  * It collects customer details such as:
  * - Name

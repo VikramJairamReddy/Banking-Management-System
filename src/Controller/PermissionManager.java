@@ -72,12 +72,12 @@ public class PermissionManager {
 
     /**
      * Checks whether the user can withdraw.
-     * Admin, Manager, and Employee can perform withdraw
+     * Admin, Manager and Employee can perform withdraw
      *
      * @return true if user has permission, otherwise false
      */
     public static boolean canWithdraw() {
-        return isAdmin() || isManager();
+        return isAdmin() || isManager() || isEmployee();
     }
 
     /**
@@ -87,7 +87,7 @@ public class PermissionManager {
      * @return true if user has permission, otherwise false
      */
     public static boolean canTransfer() {
-        return isAdmin() || isManager();
+        return isAdmin() || isManager() || isEmployee();
     }
 
 
@@ -97,7 +97,7 @@ public class PermissionManager {
      * @return true if user has permission, otherwise false
      */
     public static boolean canViewTransactions() {
-        return isAdmin() || isManager() || isEmployee();
+        return isAdmin() || isManager();
     }
 
 
@@ -107,7 +107,7 @@ public class PermissionManager {
      * @return true if user has permission, otherwise false
      */
     public static boolean canViewAccounts() {
-        return isAdmin() || isManager();
+        return isAdmin() || isManager() || isEmployee();
     }
 
 

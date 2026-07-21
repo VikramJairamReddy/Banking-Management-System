@@ -1,6 +1,6 @@
 /**
  * Represents the login model of the banking system.
- * Responsible for validating employee login credentials.
+ * Responsible for validating user login credentials.
  *
  * @author Ganta Vikram Jairam Reddy
  */
