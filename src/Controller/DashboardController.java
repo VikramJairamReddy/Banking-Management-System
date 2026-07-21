@@ -144,6 +144,10 @@ public class DashboardController {
     }
 
     private void manageAccount() {
+        if(!PermissionManager.canRemoveAccount()) {
+            showAccessDenied();
+            return;
+        }
         new ManageAccountController(bankController, this);
     }
 
@@ -196,7 +200,12 @@ public class DashboardController {
         dashboard.getDepositButton().setEnabled(PermissionManager.canDeposit());
         dashboard.getWithdrawButton().setEnabled(PermissionManager.canWithdraw());
         dashboard.getTransferButton().setEnabled(PermissionManager.canTransfer());
+
         dashboard.getTransactionButton().setEnabled(PermissionManager.canViewTransactions());
+        dashboard.getTransactionButton().setVisible(PermissionManager.canViewTransactions());
+
+        dashboard.getManageButton().setEnabled(PermissionManager.canRemoveAccount());
+        dashboard.getManageButton().setVisible(PermissionManager.canRemoveAccount());
     }
 
     /**
