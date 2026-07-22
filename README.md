@@ -4,21 +4,49 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 
 ## Features
 
-- Secure user login
-- Dashboard with banking statistics
+### Authentication & User Management
+- Secure user login system
+- Support for multiple user roles:
+  - Admin
+  - Manager
+  - Employee
+- Permission based feature access
+- Current user management
+- Secure logout functionality
+
+### Account Management
 - Create Savings and Checking accounts
-- Deposit and withdraw funds
-- Transfer money between accounts
-- Search transactions by account number, transaction ID, and date
-- Filter transactions by transaction type
-- Sort transactions by newest or oldest
-- Reset transaction search and filter options
-- View detailed transaction information through double-click
-- Search accounts by name or account number
+- Search accounts by account number or account holder name
+- View account details
+- Remove accounts based on user permissions
 - Unique account number generation
-- Unique transaction ID generation
 - Input validation and exception handling
-- Single bank instance for maintaining application data
+
+### Transaction Management
+- Deposit funds
+- Withdraw funds
+- Transfer money between accounts
+- Unique transaction ID generation
+- Maintain transaction history
+- View detailed transaction information through double-click
+
+### Transaction Search & Filtering
+- Search transactions by:
+  - Account number
+  - Transaction ID
+  - Date
+- Filter transactions by transaction type
+- Sort transactions by:
+  - Newest first
+  - Oldest first
+- Reset search and filter options
+
+### Dashboard
+- User-friendly banking dashboard
+- Displays total number of accounts
+- Displays today's transaction count
+- Shows logged-in username and role
+- Enables and disables features based on user permissions
 
 ## Technologies
 
@@ -46,6 +74,8 @@ src/
 │   ├── DashboardController.java
 │   ├── FindAccountController.java
 │   ├── LoginController.java
+│   ├── ManageAccountController.java
+│   ├── PermissionManager.java
 │   ├── TransactionController.java
 │   └── TransactionHistoryController.java
 │
@@ -53,22 +83,47 @@ src/
 │   ├── Account.java
 │   ├── Bank.java
 │   ├── CheckingAccount.java
+│   ├── CurrentUser.java
 │   ├── LoginModel.java
+│   ├── Role.java
 │   ├── SavingsAccount.java
 │   ├── Transaction.java
+│   ├── User.java
 │   └── Validate.java
 │
 ├── View/
-    ├── AccountResultFrame.java
+│   ├── AccountResultFrame.java
 │   ├── CreateAccountFrame.java
 │   ├── DashboardFrame.java
 │   ├── FindAccountFrame.java
 │   ├── LoginFrame.java
+│   ├── ManageAccountFrame.java
 │   ├── TransactionFrame.java
 │   └── TransactionHistoryFrame.java
 │
-└── Main.java
+├── .gitignore
+├── Main.java
+└── README.md
 ```
+## Current Access Permissions
+
+Admin:
+- Full access to all banking operations
+- Manage accounts
+- View transaction history
+- Perform all transactions
+
+Manager:
+- Create and search accounts
+- Perform banking transactions
+- View transaction history
+- Manage allowed account operations
+
+Employee:
+- Create accounts
+- Search accounts
+- Perform allowed daily banking operations
+- Restricted from administrative features and transaction history
 
 ## Future Enhancements
 
