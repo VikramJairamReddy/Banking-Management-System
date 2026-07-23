@@ -87,6 +87,9 @@ public class Bank {
      * @return matching Account object, or null if not found
      */
     public Account findAccount(String accountNumber) {
+        if(!accountNumber.startsWith("ACCT")) {
+            accountNumber = "ACCT" + accountNumber;
+        }
         return accounts.get(accountNumber);
     }
 

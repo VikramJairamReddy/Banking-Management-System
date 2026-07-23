@@ -88,7 +88,6 @@ src/
 │   ├── Role.java
 │   ├── SavingsAccount.java
 │   ├── Transaction.java
-│   ├── User.java
 │   └── Validate.java
 │
 ├── View/
