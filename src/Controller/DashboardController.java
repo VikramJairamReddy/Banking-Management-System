@@ -15,7 +15,6 @@ package Controller;
 import javax.swing.JOptionPane;
 
 import Model.CurrentUser;
-import Model.Role;
 import View.DashboardFrame;
 import View.LoginFrame;
 
@@ -35,9 +34,9 @@ public class DashboardController {
      * @param role logged-in user role
      * @param bank shared Bank object
      */
-    public DashboardController(String userName, Role role, BankController bankController) {
+    public DashboardController(String userName, BankController bankController) {
 
-        this.dashboard = new DashboardFrame(userName, role);
+        this.dashboard = new DashboardFrame(userName, CurrentUser.getCurrentUser().getRole());
         this.bankController = bankController;
 
         applyPermissions();

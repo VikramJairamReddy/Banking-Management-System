@@ -8,17 +8,17 @@
 package Controller;
 
 import Model.CurrentUser;
+import Model.Employee;
 import Model.LoginModel;
-import Model.User;
 import View.LoginFrame;
 
 import javax.swing.*;
 
 public class LoginController {
 
-    private LoginFrame frame;
-    private LoginModel model;
-    private BankController bankController;
+    private final LoginFrame frame;
+    private final LoginModel model;
+    private final BankController bankController;
 
     public LoginController(LoginFrame frame, BankController bankController) {
 
@@ -42,20 +42,15 @@ public class LoginController {
         String password = frame.getPassword();
 
         try{
-            User user = model.validateLogin(username, password);
-
-            if(user != null) {
-                CurrentUser.login(user);
-                new DashboardController(user.getUsername().toUpperCase(), user.getRole(), bankController);
-                frame.dispose();
-
-            }
-            else{
-                frame.resetPasswordField();
-                JOptionPane.showMessageDialog(frame,"Invalid username or password");
-            }
+            // If invalid username or password the Login Model throws an exception,
+            // Which is catched in the catch block
+            Employee employee = model.validateLogin(username, password);
+            CurrentUser.login(employee);
+            new DashboardController(employee.getName(), bankController);
+            frame.dispose();
         }
         catch(Exception e) {
+            frame.resetPasswordField();
             JOptionPane.showMessageDialog(frame, e.getMessage(), "Login Failed", JOptionPane.ERROR_MESSAGE);
         }
     }
