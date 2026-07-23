@@ -1,0 +1,151 @@
+/**
+ * Stores and manages all employees.
+ *
+ * Responsibilities:
+ * - Add and remove employees.
+ * - Search employees by ID or username.
+ * - Store all employee records.
+ * - Generate unique employee IDs.
+ *
+ * @author Ganta Vikram Jairam Reddy
+ */
+
+package Model;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class EmployeeManager {
+
+    private static EmployeeManager instance;
+
+    private final Map<String, Employee> employeesById;
+    private final Map<String, Employee> employeesByUsername;
+
+    private int nextEmployeeId = 1001;
+
+    /**
+     * Creates the employee manager and loads default employees.
+     */
+    public EmployeeManager() {
+
+        employeesById = new HashMap<>();
+        employeesByUsername = new HashMap<>();
+
+        addEmployee("System Administrator", "admin", "admin123", Role.ADMIN);
+        addEmployee("Branch Manager", "manager", "manager123", Role.MANAGER);
+        addEmployee("Bank Employee", "employee", "employee123", Role.EMPLOYEE);
+    }
+
+    /**
+     * Returns the single EmployeeManager instance.
+     *
+     * @return EmployeeManager instance
+     */
+    public static EmployeeManager getInstance() {
+
+        if(instance == null) {
+            instance = new EmployeeManager();
+        }
+
+        return instance;
+    }
+
+    /**
+     * Checks whether a username already exists.
+     *
+     * @param username username to check
+     * @return true if username exists, false otherwise
+     */
+    public boolean usernameExists(String username) {
+        return employeesByUsername.containsKey(username.toLowerCase());
+    }
+
+    /**
+     * Creates a new employee and stores it.
+     *
+     * @param name employee name
+     * @param username login username
+     * @param password login password
+     * @param role employee role
+     * @return created employee
+     */
+    public void addEmployee(String name, String username, String password, Role role) {
+
+        if(usernameExists(username)) {
+            throw new IllegalArgumentException("Username already exists");
+        }
+
+        String employeeId = generateEmployeeId();
+
+        Employee employee = new Employee(employeeId, name, username.toLowerCase(), password, role);
+        employeesById.put(employeeId.toLowerCase(), employee);
+        employeesByUsername.put(username, employee);
+    }
+
+    /**
+     * Removes an employee.
+     *
+     * @param employeeId employee ID
+     * @return true if removed successfully
+     */
+    public boolean removeEmployeeById(String employeeId) {
+
+        Employee employee = employeesById.remove(employeeId);
+
+        if(employee != null) {
+            employeesByUsername.remove(employee.getUsername());
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Finds an employee using employee ID.
+     *
+     * @param employeeId employee ID
+     * @return matching employee or null
+     */
+    public Employee findEmployeeById(String employeeId) {
+        return employeesById.get(employeeId);
+    }
+
+    /**
+     * Finds an employee using employee username.
+     *
+     * @param employeeId employee username
+     * @return matching employee or null
+     */
+    public Employee findEmployeeByUsername(String username) {
+        return employeesByUsername.get(username.toLowerCase());
+    }
+
+    /**
+     * Returns all employees.
+     *
+     * @return collection of employees
+     */
+    public Collection<Employee> getAllEmployees() {
+        return employeesById.values();
+    }
+
+    /**
+     * Returns the total number of employees.
+     *
+     * @return employee count
+     */
+    public int getTotalEmployeesCount() {
+        return employeesById.size();
+    }
+
+    /**
+     * Generates a unique employee ID.
+     *
+     * @return generated employee ID
+     */
+    private String generateEmployeeId() {
+        return "EMP" + nextEmployeeId++;
+    }
+}
