@@ -39,7 +39,7 @@ public class ManageAccountController {
      * Searches account using account number.
      */
     private void searchAccount() {
-        String accountNumber = frame.getAccountNumberField().getText().trim();
+        String accountNumber = frame.getSearchField().getText().trim();
         Account account = bankController.getAccountByAccountNumber(accountNumber);
 
         if(account == null) {
@@ -62,7 +62,7 @@ public class ManageAccountController {
             return;
         }
 
-        String accountNumber = frame.getAccountNumberField().getText().trim();
+        String accountNumber = frame.getSearchField().getText().trim();
         boolean removed = bankController.removeAccount(accountNumber);
 
         if(removed) {

@@ -112,7 +112,11 @@ public class TransactionFrame extends JFrame {
      * @return The account number as a String.
      */
     public String getAccountNumber() {
-        return accountNumberField.getText().trim();
+        String accountNumber = accountNumberField.getText().trim();
+        if(!accountNumber.startsWith("ACCT")) {
+            accountNumber = "ACCT" + accountNumber;
+        }
+        return accountNumber;
     }
 
     /**
