@@ -10,14 +10,14 @@ package Model;
 public class CurrentUser {
 
     // Stores the currently logged-in user.
-    private static User currentUser;
+    private static Employee currentUser;
 
     /**
      * Sets the current user after successful login.
      *
      * @param user authenticated user
      */
-    public static void login(User user) {
+    public static void login(Employee user) {
         currentUser = user;
     }
 
@@ -26,7 +26,7 @@ public class CurrentUser {
      *
      * @return current logged-in user
      */
-    public static User getCurrentUser() {
+    public static Employee getCurrentUser() {
         return currentUser;
     }
 

@@ -33,9 +33,9 @@ public class EmployeeManager {
         employeesById = new HashMap<>();
         employeesByUsername = new HashMap<>();
 
-        addEmployee("System Administrator", "admin", "admin123", Role.ADMIN);
-        addEmployee("Branch Manager", "manager", "manager123", Role.MANAGER);
-        addEmployee("Bank Employee", "employee", "employee123", Role.EMPLOYEE);
+        addEmployee("Administrator", "admin", "admin123", Role.ADMIN);
+        addEmployee("Manager", "manager", "manager123", Role.MANAGER);
+        addEmployee("Employee", "employee", "employee123", Role.EMPLOYEE);
     }
 
     /**

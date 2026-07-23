@@ -1,26 +1,25 @@
 /**
- * Represents the login model of the banking system.
- * Responsible for validating user login credentials.
+ * Handles employee authentication.
+ *
+ * Responsibilities:
+ * - Authenticate login.
+ * - Validate username and password.
+ * - Return the authenticated employee.
  *
  * @author Ganta Vikram Jairam Reddy
  */
 
 package Model;
 
-import java.util.Map;
-import java.util.HashMap;
-
 public class LoginModel {
 
-    // Stores users with username as the key
-    private final Map<String, User> users;
-    
+    private final EmployeeManager employeeManager;
+
+    /**
+     * Creates the login model.
+     */
     public LoginModel() {
-        users = new HashMap<>();
-    
-        users.put("admin", new User("admin", "admin12", Role.ADMIN));
-        users.put("manager", new User("manager", "manager12", Role.MANAGER));
-        users.put("employee", new User("employee", "employee12", Role.EMPLOYEE));
+        employeeManager = EmployeeManager.getInstance();
     }
 
     /**
@@ -28,15 +27,16 @@ public class LoginModel {
      *
      * @param username username entered
      * @param password password entered
-     * @return User object if the entered credentials are valid, otherwise null
+     * @return the authenticated employee
      */
-    public User validateLogin(String username, String password) {
-        User user = users.get(username);
+    public Employee validateLogin(String username, String password) {
 
-        if(user != null && user.checkPassword(password)) {
-            return user;
+        Employee employee = employeeManager.findEmployeeByUsername(username);
+
+        if(employee == null || !employee.checkPassword(password)) {
+            throw new IllegalArgumentException("Invalid username or password.");
         }
 
-        return null;
+        return employee;
     }
 }
