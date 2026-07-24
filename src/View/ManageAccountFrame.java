@@ -5,7 +5,7 @@
  * - Search accounts
  * - Display multiple account search results
  * - Displays selected account details
- * - Remove account
+ * - Remove accounts
  *
  * @author Ganta Vikram Jairam Reddy
  */
@@ -31,7 +31,6 @@ public class ManageAccountFrame extends JFrame {
     private JLabel balanceLabel;
     private JLabel phoneLabel;
 
-    private JButton searchButton;
     private JButton removeButton;
     private JButton backButton;
 
@@ -65,12 +64,8 @@ public class ManageAccountFrame extends JFrame {
 
         searchField = new JTextField(25);
 
-        searchButton = new JButton("Search");
-        buttonAppearance(searchButton, new Color(41,112,204));
-
         panel.add(new JLabel("Search Account:"));
         panel.add(searchField);
-        panel.add(searchButton);
 
         return panel;
     }
@@ -107,7 +102,7 @@ public class ManageAccountFrame extends JFrame {
         // Account Type
         accountTable.getColumnModel().getColumn(2).setPreferredWidth(100);
         // Balance
-        accountTable.getColumnModel().getColumn(3).setPreferredWidth(00);
+        accountTable.getColumnModel().getColumn(3).setPreferredWidth(90);
 
         JScrollPane scrollPane = new JScrollPane(accountTable);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Search Results"));
@@ -193,15 +188,6 @@ public class ManageAccountFrame extends JFrame {
      */
     public JTextField getSearchField() {
         return searchField;
-    }
-
-    /**
-     * Returns search button.
-     *
-     * @return search button
-     */
-    public JButton getSearchButton() {
-        return searchButton;
     }
 
     /**
