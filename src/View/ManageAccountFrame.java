@@ -100,6 +100,15 @@ public class ManageAccountFrame extends JFrame {
         // disable relocation from the table
         accountTable.getTableHeader().setReorderingAllowed(false);
 
+        // Account Number
+        accountTable.getColumnModel().getColumn(0).setPreferredWidth(120);
+        // Name
+        accountTable.getColumnModel().getColumn(1).setPreferredWidth(160);
+        // Account Type
+        accountTable.getColumnModel().getColumn(2).setPreferredWidth(100);
+        // Balance
+        accountTable.getColumnModel().getColumn(3).setPreferredWidth(00);
+
         JScrollPane scrollPane = new JScrollPane(accountTable);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Search Results"));
 
