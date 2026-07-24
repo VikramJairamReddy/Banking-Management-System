@@ -11,6 +11,12 @@
 
 package Controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Collection;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import Model.Account;
 import View.ManageAccountFrame;
 
@@ -20,6 +26,8 @@ public class ManageAccountController {
     private final BankController bankController;
     private final DashboardController dashboard;
 
+    private String selectedAccountNumber;
+
     public ManageAccountController(BankController bankController, DashboardController dashboard) {
 
         this.bankController = bankController;
@@ -28,29 +36,65 @@ public class ManageAccountController {
         frame = new ManageAccountFrame();
         dashboard.showDashboard(false);
 
-        frame.getSearchButton().addActionListener(e -> searchAccount());
+        addSearchListener();
         frame.getRemoveButton().addActionListener(e -> removeAccount());
         frame.getBackButton().addActionListener(e -> close());
+        frame.getAccountTable().addMouseListener(new MouseAdapter() {
+            
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    int row = frame.getAccountTable().getSelectedRow();
+                    if(row != -1) {
+                        showSelectedAccount(row);
+                    }
+                }
+            }
+        });
 
         frame.setVisible(true);
     }
 
     /**
-     * Searches account using account number.
+     * Adds a DocumentListener to the search field for
+     * live searching whenever the user types or removes text.
+     */
+    private void addSearchListener() {
+        frame.getSearchField().getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                searchAccount();
+            }
+        
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                searchAccount();
+            }
+        
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                searchAccount();
+            }
+        });
+    }
+
+    /**
+     * Searches accounts based on entered text and updates the result table.
      */
     private void searchAccount() {
-        String accountNumber = frame.getSearchField().getText().trim();
-        Account account = bankController.getAccountByAccountNumber(accountNumber);
-
-        if(account == null) {
-            frame.clearDetails();
-            frame.showMessage("Account not found");
+    
+        String search = frame.getSearchField().getText().trim();
+    
+        if(search.isEmpty()) {
+            frame.clearTable();
+            selectedAccountNumber = null;
             return;
         }
-
-        frame.displayAccount(account.getAccountNumber(), account.getAccountHolderName(),
-                    account.getAccountType() + " Account", String.valueOf(account.getBalance()),
-                    account.getPhoneNumber());
+    
+        Collection<Account> accounts = bankController.searchAccounts(search);
+    
+        loadAccounts(accounts);
     }
 
     /**
@@ -58,20 +102,72 @@ public class ManageAccountController {
      */
     private void removeAccount() {
 
+        if(selectedAccountNumber == null) {
+            frame.showMessage("Please select an account first");
+            return;
+        }
+    
         if(!frame.confirmRemove()) {
             return;
         }
-
-        String accountNumber = frame.getSearchField().getText().trim();
-        boolean removed = bankController.removeAccount(accountNumber);
-
+    
+        boolean removed = bankController.removeAccount(selectedAccountNumber);
+    
         if(removed) {
             frame.showMessage("Account removed successfully");
             frame.clearDetails();
+            searchAccount();
             dashboard.refreshDashboard();
+            selectedAccountNumber = null;
         }
         else {
             frame.showMessage("Unable to remove account");
+        }
+    }
+
+    /**
+     * Displays detailed information of the selected account.
+     *
+     * Retrieves the selected account from the table and
+     * displays complete account information.
+     *
+     * @param row selected account table row
+     */
+    private void showSelectedAccount(int row) {
+
+        selectedAccountNumber = (String) frame.getAccountTable().getValueAt(row, 0);
+        Account account = bankController.getAccountByAccountNumber(selectedAccountNumber);
+    
+        if(account == null) {
+            return;
+        }
+    
+        frame.displayAccount(
+                account.getAccountNumber(),
+                account.getAccountHolderName(),
+                account.getClass().getSimpleName().replace("Account", ""),
+                String.format("$%.2f", account.getBalance()),
+                account.getPhoneNumber()
+        );
+    }
+
+    /**
+     * Displays accounts in the search results table.
+     *
+     * @param accounts accounts to display
+     */
+    private void loadAccounts(Collection<Account> accounts) {
+
+        frame.clearTable();
+
+        for(Account account : accounts) {
+            frame.addAccount(new Object[] {
+                    account.getAccountNumber(),
+                    account.getAccountHolderName(),
+                    // Displaying only 'Savings' or 'Checkings' for account type
+                    account.getClass().getSimpleName().replace("Account", ""),
+                    String.format("$%.2f", account.getBalance())
+            });
         }
     }
 

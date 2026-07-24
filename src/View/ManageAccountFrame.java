@@ -152,7 +152,7 @@ public class ManageAccountFrame extends JFrame {
         removeButton = new JButton("Remove Account");
         backButton = new JButton("Back");
 
-        buttonAppearance(removeButton, new Color(204,60,60));
+        buttonAppearance(removeButton, new Color(55, 65, 81));
         buttonAppearance(backButton, Color.DARK_GRAY);
 
         removeButton.setEnabled(false);
