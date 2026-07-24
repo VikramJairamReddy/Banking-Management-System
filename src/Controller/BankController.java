@@ -79,6 +79,16 @@ public class BankController {
         return bank.accountExists(accountNumber);
     }
 
+    /**
+     * Searches accounts using the search value.
+     *
+     * @param search search value entered by the user
+     * @return collection of matching accounts
+     */
+    public Collection<Account> searchAccounts(String search) {
+        return bank.searchAccounts(search);
+    }
+
     // -------- TRANSACTIONS --------
 
     /**

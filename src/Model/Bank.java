@@ -135,6 +135,35 @@ public class Bank {
         return accounts.values();
     }
 
+    /**
+     * Searches accounts by account number or account holder name.
+     *
+     * @param search search value
+     * @return collection of matching accounts
+     */
+    public Collection<Account> searchAccounts(String search) {
+
+        Collection<Account> results = new ArrayList<>();
+
+        if(search == null || search.trim().isEmpty()) {
+            return results;
+        }
+
+        search = search.trim().toLowerCase();
+
+        for(Account account : accounts.values()) {
+
+            String accountNumber = account.getAccountNumber().toLowerCase();
+            String accountName = account.getAccountHolderName().toLowerCase();
+
+            if(accountNumber.contains(search) || accountName.contains(search)) {
+                results.add(account);
+            }
+        }
+
+        return results;
+    }
+
     //  -------- TRANSACTIONS --------
 
     /**
