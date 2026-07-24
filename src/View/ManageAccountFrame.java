@@ -2,8 +2,9 @@
  * Displays account management options.
  *
  * Features:
- * - Search account
- * - Display account details
+ * - Search accounts
+ * - Display multiple account search results
+ * - Displays selected account details
  * - Remove account
  *
  * @author Ganta Vikram Jairam Reddy
@@ -12,12 +13,17 @@
 package View;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import javax.swing.border.EmptyBorder;
 
 public class ManageAccountFrame extends JFrame {
 
-    private JTextField accountNumberField;
+    private JTextField searchField;
+
+    // Table
+    private DefaultTableModel table;
+    private JTable accountTable;
 
     private JLabel accountNumberLabel;
     private JLabel nameLabel;
@@ -30,84 +36,119 @@ public class ManageAccountFrame extends JFrame {
     private JButton backButton;
 
 
+    /**
+     * Creates the Manage Account window.
+     */
     public ManageAccountFrame() {
 
         setTitle("Manage Account");
-        setSize(500,450);
+        setSize(750, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
         add(createSearchPanel(), BorderLayout.NORTH);
-        add(createDetailsPanel(), BorderLayout.CENTER);
+        add(createCenterPanel(), BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
     }
 
 
     /**
      * Creates search section.
+     *
+     * @return search panel
      */
     private JPanel createSearchPanel() {
 
-        JPanel panel = new JPanel(new FlowLayout());
-        panel.setBorder(new EmptyBorder(15,15,10,15));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 15));
+        panel.setBorder(new EmptyBorder(10, 10, 10,10));
 
-        accountNumberField = new JTextField(15);
+        searchField = new JTextField(25);
 
         searchButton = new JButton("Search");
         buttonAppearance(searchButton, new Color(41,112,204));
 
-        panel.add(new JLabel("Account Number:"));
-        panel.add(accountNumberField);
+        panel.add(new JLabel("Search Account:"));
+        panel.add(searchField);
         panel.add(searchButton);
-
 
         return panel;
     }
 
     /**
-     * Creates account details section.
+     * Creates the center section which contains table and details.
+     *
+     * @return center panel
      */
-    private JPanel createDetailsPanel() {
+    private JPanel createCenterPanel() {
 
-        JPanel panel = new JPanel(new GridLayout(5,2,5,10));
-        panel.setBorder(new EmptyBorder(20,60,20,60));
+        JPanel panel = new JPanel(new BorderLayout());
 
-        panel.add(new JLabel("Account Number:"));
+        // -------- Account Table --------
+
+        table = new DefaultTableModel(new String[]{"Account Number", "Name", "Type", "Balance"}, 0) {
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        accountTable = new JTable(table);
+
+        accountTable.setRowHeight(25);
+        // disable relocation from the table
+        accountTable.getTableHeader().setReorderingAllowed(false);
+
+        JScrollPane scrollPane = new JScrollPane(accountTable);
+        scrollPane.setBorder(BorderFactory.createTitledBorder("Search Results"));
+
+        panel.add(scrollPane, BorderLayout.CENTER);
+
+        // -------- Details Panel --------
+
+        JPanel detailsPanel = new JPanel(new GridLayout(5,2,10,10));
+        detailsPanel.setBorder(BorderFactory.createTitledBorder("Account Details"));
+
+        detailsPanel.add(new JLabel("Account Number:"));
         accountNumberLabel = new JLabel("-");
-        panel.add(accountNumberLabel);
+        detailsPanel.add(accountNumberLabel);
 
-        panel.add(new JLabel("Name:"));
+        detailsPanel.add(new JLabel("Name:"));
         nameLabel = new JLabel("-");
-        panel.add(nameLabel);
+        detailsPanel.add(nameLabel);
 
-        panel.add(new JLabel("Account Type:"));
+        detailsPanel.add(new JLabel("Account Type:"));
         typeLabel = new JLabel("-");
-        panel.add(typeLabel);
+        detailsPanel.add(typeLabel);
 
-        panel.add(new JLabel("Balance:"));
+        detailsPanel.add(new JLabel("Balance:"));
         balanceLabel = new JLabel("-");
-        panel.add(balanceLabel);
+        detailsPanel.add(balanceLabel);
 
-        panel.add(new JLabel("Phone:"));
+        detailsPanel.add(new JLabel("Phone:"));
         phoneLabel = new JLabel("-");
-        panel.add(phoneLabel);
+        detailsPanel.add(phoneLabel);
+
+        panel.add(detailsPanel, BorderLayout.SOUTH);
+
 
         return panel;
     }
-
 
     /**
      * Creates bottom action buttons.
+     *
+     * @return button panel
      */
     private JPanel createButtonPanel() {
 
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 25, 10));
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT,10,15));
 
         removeButton = new JButton("Remove Account");
         backButton = new JButton("Back");
 
-        buttonAppearance(removeButton, new Color(55, 65, 81));
+        buttonAppearance(removeButton, new Color(204,60,60));
         buttonAppearance(backButton, Color.DARK_GRAY);
 
         removeButton.setEnabled(false);
@@ -119,49 +160,97 @@ public class ManageAccountFrame extends JFrame {
     }
 
     /**
-     * Sets the appearance of buttons.
+     * Sets button appearance.
      *
-     * @param button button whose appearance will be modified
-     * @param color background color
+     * @param button button to style
+     * @param color button color
      */
     private void buttonAppearance(JButton button, Color color) {
-
+        button.setPreferredSize(new Dimension(150,35));
         button.setBackground(color);
         button.setForeground(Color.WHITE);
-
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-
+        button.setFont(new Font("Arial", Font.BOLD,14));
         button.setFocusPainted(false);
-
-        button.setContentAreaFilled(true);
-        button.setOpaque(true);
-
         button.setBorderPainted(false);
+        button.setOpaque(true);
     }
 
     // ---------------- GETTERS ----------------
 
-    public JTextField getAccountNumberField() {
-        return accountNumberField;
+    /**
+     * Returns search field.
+     *
+     * @return search field
+     */
+    public JTextField getSearchField() {
+        return searchField;
     }
 
+    /**
+     * Returns search button.
+     *
+     * @return search button
+     */
     public JButton getSearchButton() {
         return searchButton;
     }
 
+    /**
+     * Returns remove button.
+     *
+     * @return remove button
+     */
     public JButton getRemoveButton() {
         return removeButton;
     }
 
+
+    /**
+     * Returns back button.
+     *
+     * @return back button
+     */
     public JButton getBackButton() {
         return backButton;
     }
 
+    /**
+     * Returns account table.
+     *
+     * @return account table
+     */
+    public JTable getAccountTable() {
+        return accountTable;
+    }
+
+    // ---------------- TABLE METHODS ----------------
+
+    /**
+     * Clears all table records.
+     */
+    public void clearTable() {
+        table.setRowCount(0);
+    }
+
+    /**
+     * Adds account information into table.
+     *
+     * @param row account details
+     */
+    public void addAccount(Object[] row) {
+        table.addRow(row);
+    }
 
     // ---------------- DISPLAY METHODS ----------------
 
     /**
-     * Displays account information.
+     * Displays selected account details.
+     *
+     * @param accountNumber account number
+     * @param name account holder name
+     * @param type account type
+     * @param balance account balance
+     * @param phone account holder phone
      */
     public void displayAccount(String accountNumber, String name, String type, String balance,
                                     String phone) {
@@ -187,19 +276,24 @@ public class ManageAccountFrame extends JFrame {
         typeLabel.setText("-");
         balanceLabel.setText("-");
         phoneLabel.setText("-");
-        accountNumberField.setText("");
 
         removeButton.setEnabled(false);
         removeButton.setBackground(new Color(55, 65, 81));
     }
 
+    /**
+     * Displays message dialog.
+     *
+     * @param message message to display
+     */
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
-
     }
 
     /**
-     * Confirmation Dialog before actually deleteing an account
+     * Confirmation Dialog before actually removing an account
+     * 
+     * @return true if confirmed
      */
     public boolean confirmRemove() {
         int result = JOptionPane.showConfirmDialog(this,
