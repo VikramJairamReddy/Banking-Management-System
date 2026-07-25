@@ -10,14 +10,17 @@ A Java Swing application using MVC architecture and OOP principles. The system a
   - Admin
   - Manager
   - Employee
+- Role-based access control
 - Permission based feature access
 - Current user management
 - Secure logout functionality
 
 ### Account Management
 - Create Savings and Checking accounts
-- Search accounts by account number or account holder name
-- View account details
+- Live account search by:
+  - Account number
+  - Account holder name
+- View detailed account information
 - Remove accounts based on user permissions
 - Unique account number generation
 - Input validation and exception handling
@@ -27,7 +30,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Withdraw funds
 - Transfer money between accounts
 - Unique transaction ID generation
-- Maintain transaction history
+- Maintain complete transaction history
 - View detailed transaction information through double-click
 
 ### Transaction Search & Filtering
@@ -46,7 +49,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Displays total number of accounts
 - Displays today's transaction count
 - Shows logged-in username and role
-- Enables and disables features based on user permissions
+- Dynamically enables and disables features based on user permissions
 
 ## Technologies
 
@@ -55,6 +58,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - MVC Architecture
 - Object-Oriented Programming (OOP)
 - Java Collections Framework
+- Exception Handling
 - Git & GitHub
 
 ## OOP Concepts
@@ -77,13 +81,16 @@ src/
 │   ├── ManageAccountController.java
 │   ├── PermissionManager.java
 │   ├── TransactionController.java
-│   └── TransactionHistoryController.java
+│   ├── TransactionHistoryController.java
+│   └── UserManagementController.java
 │
 ├── Model/
 │   ├── Account.java
 │   ├── Bank.java
 │   ├── CheckingAccount.java
 │   ├── CurrentUser.java
+│   ├── Employee.java
+│   ├── EmployeeManager.java
 │   ├── LoginModel.java
 │   ├── Role.java
 │   ├── SavingsAccount.java
@@ -98,37 +105,9 @@ src/
 │   ├── LoginFrame.java
 │   ├── ManageAccountFrame.java
 │   ├── TransactionFrame.java
-│   └── TransactionHistoryFrame.java
+│   ├── TransactionHistoryFrame.java
+│   └── UserManagementFrame.java
 │
 ├── .gitignore
 ├── Main.java
 └── README.md
-```
-## Current Access Permissions
-
-Admin:
-- Full access to all banking operations
-- Manage accounts
-- View transaction history
-- Perform all transactions
-
-Manager:
-- Create and search accounts
-- Perform banking transactions
-- View transaction history
-- Manage allowed account operations
-
-Employee:
-- Create accounts
-- Search accounts
-- Perform allowed daily banking operations
-- Restricted from administrative features and transaction history
-
-## Future Enhancements
-
-- Database - MySQL
-- Account editing
-- Interest calculation
-
-## Author
-Ganta Vikram Jairam Reddy
