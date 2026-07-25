@@ -43,6 +43,7 @@ public class ManageAccountFrame extends JFrame {
         setTitle("Manage Account");
         setSize(750, 600);
         setLocationRelativeTo(null);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -259,7 +260,6 @@ public class ManageAccountFrame extends JFrame {
         removeButton.setEnabled(true);
         removeButton.setBackground(new Color(204, 60, 60));
     }
-
 
     /**
      * Clears displayed account information.
