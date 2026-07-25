@@ -34,6 +34,10 @@ public class ManageAccountController {
         this.dashboard = dashboard;
 
         frame = new ManageAccountFrame();
+        if(!PermissionManager.canRemoveAccount()) {
+            frame.showMessage("You cannot remove accounts");
+            return;
+        }
         dashboard.showDashboard(false);
 
         addSearchListener();

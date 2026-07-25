@@ -121,6 +121,16 @@ public class PermissionManager {
         return isAdmin();
     }
 
+    /**
+     * Checks whether the user can manage customer accounts.
+     * Admin and Manager can perform this.
+     *
+     * @return true if user has permission, otherwise false
+     */
+    public static boolean canManageAccounts() {
+        return isAdmin() || isManager();
+    }
+
 
     /**
      * Checks whether the user can assign roles.
