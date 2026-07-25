@@ -154,9 +154,9 @@ public class DashboardFrame extends JFrame {
         JPanel adminPanel = new JPanel(new BorderLayout());
         adminPanel.setBorder(new EmptyBorder(10, 20, 15, 20));
 
-        manageButton = new JButton("Manage Account");
-        manageButton.setPreferredSize(new Dimension(160, 40));
+        manageButton = new JButton("Manage Accounts");
         buttonAppearance(manageButton, new Color(12, 163, 159));
+        manageButton.setPreferredSize(new Dimension(170, 40));
 
         JPanel removePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         removePanel.add(manageButton);

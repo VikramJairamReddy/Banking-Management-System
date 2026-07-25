@@ -180,6 +180,11 @@ public class ManageAccountController {
      */
     private void close() {
         frame.dispose();
-        dashboard.showDashboard(true);
+        if(PermissionManager.canAssignRoles()) {
+            dashboard.openUserManagement();
+        }
+        else {
+            dashboard.showDashboard(true);
+        }
     }
 }
