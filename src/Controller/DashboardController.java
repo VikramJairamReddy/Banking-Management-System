@@ -31,7 +31,6 @@ public class DashboardController {
      * Creates dashboard controller
      *
      * @param userName logged-in user name
-     * @param role logged-in user role
      * @param bank shared Bank object
      */
     public DashboardController(String userName, BankController bankController) {
@@ -40,7 +39,7 @@ public class DashboardController {
         this.bankController = bankController;
 
         applyPermissions();
-        update();
+        updateDashboard();
 
         // adding listeners to the action buttons
         dashboard.getCreateAccountButton().addActionListener(e -> createAccount());
@@ -49,8 +48,16 @@ public class DashboardController {
         dashboard.getWithdrawButton().addActionListener(e -> withdraw());
         dashboard.getTransferButton().addActionListener(e -> transfer());
         dashboard.getTransactionButton().addActionListener(e -> transactions());
-        dashboard.getManageButton().addActionListener(e -> manageAccount());
         dashboard.getLogoutButton().addActionListener(e -> logout());
+
+        if(PermissionManager.isAdmin()) {
+            dashboard.getManageButton().setText("User Management");
+            dashboard.getManageButton().addActionListener(e -> openUserManagement());
+        }
+        else if(PermissionManager.isManager()) {
+            dashboard.getManageButton().setText("Manage Accounts");
+            dashboard.getManageButton().addActionListener(e -> openManageAccount());
+        }
 
         dashboard.setVisible(true);
     }
@@ -142,8 +149,29 @@ public class DashboardController {
         new TransactionHistoryController(bankController, this);
     }
 
-    private void manageAccount() {
-        if(!PermissionManager.canRemoveAccount()) {
+    /**
+     * Opens the user management window.
+     *
+     * This feature is available only to users with permission to manage users and employees (ADMIN). 
+     * The UserManagementController handles
+     * employee management and account management options.
+     */
+    public void openUserManagement() {
+        if(!PermissionManager.canManageAccounts()) {
+            showAccessDenied();
+            return;
+        }
+        new UserManagementController(CurrentUser.getCurrentUser().getUsername(), 
+                        CurrentUser.getCurrentUser().getRole().toString(), this);
+    }
+
+    /**
+     * Opens the account management window.
+     *
+     * Allows users to search, view, and remove customer accounts
+     */
+    public void openManageAccount() {
+        if(!PermissionManager.canManageAccounts()) {
             showAccessDenied();
             return;
         }
@@ -166,7 +194,7 @@ public class DashboardController {
      * Refreshes the total number of accounts and today's transaction count 
      * which are displayed on the dashboard.
      */
-    private void update() {
+    private void updateDashboard() {
         dashboard.setTotalAccounts(bankController.getNumberOfAccounts());
         dashboard.setTotalTransactions(bankController.getTodayTransactionCount());
     }
@@ -175,7 +203,7 @@ public class DashboardController {
      * Refreshes the dashboard to reflect any changes in the bank data.
      */
     public void refreshDashboard() {
-        update();
+        updateDashboard();
     }
 
     /**
@@ -203,8 +231,8 @@ public class DashboardController {
         dashboard.getTransactionButton().setEnabled(PermissionManager.canViewTransactions());
         dashboard.getTransactionButton().setVisible(PermissionManager.canViewTransactions());
 
-        dashboard.getManageButton().setEnabled(PermissionManager.canRemoveAccount());
-        dashboard.getManageButton().setVisible(PermissionManager.canRemoveAccount());
+        dashboard.getManageButton().setEnabled(PermissionManager.canManageAccounts());
+        dashboard.getManageButton().setVisible(PermissionManager.canManageAccounts());
     }
 
     /**
