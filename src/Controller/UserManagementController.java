@@ -46,16 +46,7 @@ public class UserManagementController {
      */
     private void employeeManagement() {
         new EmployeeManagementController(dashboard);
-        showUserManagement(false);
-    }
-
-    /**
-     * Shows or hides the user management window.
-     *
-     * @param value true to display the window, false to hide it
-     */
-    public void showUserManagement(boolean value) {
-        frame.setVisible(value);
+        frame.dispose();
     }
 
     /**

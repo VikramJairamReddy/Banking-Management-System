@@ -173,7 +173,7 @@ public class EmployeeManagementController {
             return;
         }
     
-        //new UpdateEmployeeController();
+        new UpdateEmployeeController(employee, this);
     }
 
     /**
@@ -210,6 +210,13 @@ public class EmployeeManagementController {
      */
     public void refreshEmployees() {
         searchEmployee();
+    }
+
+    /**
+     * 
+     */
+    public void showEmployeeWindow(boolean value) {
+        frame.setVisible(value);
     }
 
     /**
