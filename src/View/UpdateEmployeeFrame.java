@@ -15,6 +15,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import Model.Employee;
 import Model.Role;
 
 public class UpdateEmployeeFrame extends JFrame {
@@ -31,12 +32,9 @@ public class UpdateEmployeeFrame extends JFrame {
     /**
      * Creates the Update Employee window.
      *
-     * @param employeeId employee ID
-     * @param name employee name
-     * @param role current employee role
-     * @param email current employee email
+     * @param employee selected employee
      */
-    public UpdateEmployeeFrame(String employeeId, String name, Role role, String email) {
+    public UpdateEmployeeFrame(Employee employee) {
 
         setTitle("Update Employee");
         setSize(400, 350);
@@ -45,39 +43,36 @@ public class UpdateEmployeeFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        add(createFormPanel(employeeId, name, role, email), BorderLayout.CENTER);
+        add(createFormPanel(employee), BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
     }
 
     /**
      * Creates employee information panel.
      *
-     * @param employeeId employee ID
-     * @param name employee name
-     * @param role employee role
-     * @param email employee email
+     * @param employee selected employee
      * @return the form panel
      */
-    private JPanel createFormPanel(String employeeId, String name, Role role, String email) {
+    private JPanel createFormPanel(Employee employee) {
 
-        JPanel panel = new JPanel(new GridLayout(4,2,10,15));
-        panel.setBorder(new EmptyBorder(30,30,20,30));
+        JPanel panel = new JPanel(new GridLayout(4, 2, 10, 15));
+        panel.setBorder(new EmptyBorder(30, 30, 20, 30));
 
         panel.add(new JLabel("Employee ID:"));
-        employeeIdLabel = new JLabel(employeeId);
+        employeeIdLabel = new JLabel(employee.getEmployeeId());
         panel.add(employeeIdLabel);
 
         panel.add(new JLabel("Name:"));
-        nameLabel = new JLabel(name);
+        nameLabel = new JLabel(employee.getName());
         panel.add(nameLabel);
 
         panel.add(new JLabel("Role:"));
         roleBox = new JComboBox<>(Role.values());
-        roleBox.setSelectedItem(role);
+        roleBox.setSelectedItem(employee.getRole());
         panel.add(roleBox);
 
         panel.add(new JLabel("Email:"));
-        emailField = new JTextField(email);
+        emailField = new JTextField(employee.getEmployeeEmail());
         panel.add(emailField);
 
         return panel;
@@ -127,7 +122,7 @@ public class UpdateEmployeeFrame extends JFrame {
     /**
      * Returns the selected role of the employee.
      *
-     * @return selected role
+     * @return selected employee role
      */
     public Role getSelectedRole() {
         return (Role) roleBox.getSelectedItem();
@@ -140,15 +135,6 @@ public class UpdateEmployeeFrame extends JFrame {
      */
     public String getEmail() {
         return emailField.getText().trim();
-    }
-
-    /**
-     * Returns employee ID.
-     *
-     * @return employee ID
-     */
-    public String getEmployeeId() {
-        return employeeIdLabel.getText();
     }
 
     /**
@@ -176,5 +162,21 @@ public class UpdateEmployeeFrame extends JFrame {
      */
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
+    }
+
+    /**
+     * Displays a confirmation dialog before updating an employee.
+     *
+     * Asks the user to confirm the update operation before
+     * applying changes to employee information.
+     *
+     * @return true if the user confirms the update, false otherwise
+     */
+    public boolean confirmUpdate() {
+        int result = JOptionPane.showConfirmDialog(this,
+            "Are you sure you want to Update?",
+            "Confirmation", JOptionPane.YES_NO_OPTION);
+
+        return result == JOptionPane.YES_OPTION;
     }
 }
