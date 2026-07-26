@@ -16,6 +16,7 @@ import Model.Account;
 import Model.Bank;
 import Model.CheckingAccount;
 import Model.SavingsAccount;
+import Model.Validate;
 import View.CreateAccountFrame;
 
 import javax.swing.*;
@@ -68,6 +69,13 @@ public class CreateAccountController {
         }
 
         try{
+            if(!Validate.isValidName(name)) {
+                throw new IllegalArgumentException("Invalid Name");
+            }
+            if(!Validate.isValidPhoneNumber(phone)) {
+                throw new IllegalArgumentException("Invalid phone number");
+            }
+
             String accountNumber = bankController.generateAccountNumber();
 
             Account account;
