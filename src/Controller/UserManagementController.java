@@ -27,6 +27,7 @@ public class UserManagementController {
 
         frame.getManageAccountButton().addActionListener(e -> manageAccount());
         frame.getEmployeeManagementButton().addActionListener(e -> employeeManagement());
+        frame.getCreateEmployeeButton().addActionListener(e -> createEmployee());
         frame.getBackButton().addActionListener(e -> closeWindow());
 
         frame.setVisible(true);
@@ -47,6 +48,22 @@ public class UserManagementController {
     private void employeeManagement() {
         new EmployeeManagementController(dashboard);
         frame.dispose();
+    }
+
+    /**
+     * Opens the employee creation window.
+     */
+    private void createEmployee() {
+        //new CreateEmployeeController();
+    }
+
+    /**
+     * Shows or hides the user management window.
+     *
+     * @param value true to show, false to hide
+     */
+    public void showUserManagement(boolean value) {
+        frame.setVisible(value);
     }
 
     /**

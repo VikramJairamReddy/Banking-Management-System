@@ -174,11 +174,11 @@ public class UserManagementFrame extends JFrame {
     }
 
     /**
-     * Returns create employee account button.
+     * Returns add employee button.
      *
-     * @return create account button
+     * @return add employee button
      */
-    public JButton getCreateAccountButton() {
+    public JButton getCreateEmployeeButton() {
         return createEmployeeButton;
     }
 }
