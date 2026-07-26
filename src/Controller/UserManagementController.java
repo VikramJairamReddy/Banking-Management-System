@@ -43,11 +43,19 @@ public class UserManagementController {
 
     /**
      * Opens employee management.
-     *
-     * Employee management will be implemented later.
      */
     private void employeeManagement() {
-        closeWindow();
+        new EmployeeManagementController(dashboard);
+        showUserManagement(false);
+    }
+
+    /**
+     * Shows or hides the user management window.
+     *
+     * @param value true to display the window, false to hide it
+     */
+    public void showUserManagement(boolean value) {
+        frame.setVisible(value);
     }
 
     /**
