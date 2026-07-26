@@ -19,6 +19,7 @@ public class UserManagementFrame extends JFrame {
 
     private JButton manageAccountButton;
     private JButton employeeManagementButton;
+    private JButton createEmployeeButton;
     private JButton backButton;
 
     /**
@@ -112,10 +113,14 @@ public class UserManagementFrame extends JFrame {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBorder(new EmptyBorder(15,10,15,15));
 
+        createEmployeeButton = new JButton("Add Employee");
+        buttonAppearance(createEmployeeButton, new Color(34, 139, 34));
+
         backButton = new JButton("Back");
         buttonAppearance(backButton, Color.DARK_GRAY);
         backButton.setSize(new Dimension(80, 40));
 
+        bottomPanel.add(createEmployeeButton);
         bottomPanel.add(backButton);
 
         return bottomPanel;
@@ -166,5 +171,14 @@ public class UserManagementFrame extends JFrame {
      */
     public JButton getBackButton() {
         return backButton;
+    }
+
+    /**
+     * Returns create employee account button.
+     *
+     * @return create account button
+     */
+    public JButton getCreateAccountButton() {
+        return createEmployeeButton;
     }
 }
