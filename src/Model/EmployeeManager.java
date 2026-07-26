@@ -81,7 +81,7 @@ public class EmployeeManager {
         String employeeId = generateEmployeeId();
 
         Employee employee = new Employee(employeeId, name, username.toLowerCase(), password, role, email);
-        employeesById.put(employeeId.toLowerCase(), employee);
+        employeesById.put(employeeId, employee);
         employeesByUsername.put(username, employee);
     }
 
@@ -120,7 +120,7 @@ public class EmployeeManager {
      * @return matching employee or null
      */
     public Employee findEmployeeByUsername(String username) {
-        return employeesByUsername.get(username.toLowerCase());
+        return employeesByUsername.get(username);
     }
 
     /**

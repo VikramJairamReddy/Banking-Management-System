@@ -280,7 +280,6 @@ public class EmployeeManagementFrame extends JFrame {
         nameLabel.setText("-");
         roleLabel.setText("-");
         emailLabel.setText("-");
-        searchField.setText("");
 
         updateButton.setEnabled(false);
         buttonAppearance(updateButton, new Color(55, 65, 81));
