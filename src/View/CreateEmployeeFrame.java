@@ -197,11 +197,8 @@ public class CreateEmployeeFrame extends JFrame {
      */
     public boolean confirmCreate() {
 
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                "Create this employee?",
-                "Confirmation",
-                JOptionPane.YES_NO_OPTION);
+        int result = JOptionPane.showConfirmDialog(this,"Create this employee?",
+                "Confirmation", JOptionPane.YES_NO_OPTION);
 
         return result == JOptionPane.YES_OPTION;
     }

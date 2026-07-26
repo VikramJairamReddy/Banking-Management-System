@@ -54,7 +54,7 @@ public class UserManagementController {
      * Opens the employee creation window.
      */
     private void createEmployee() {
-        //new CreateEmployeeController();
+        new CreateEmployeeController(this);
     }
 
     /**
