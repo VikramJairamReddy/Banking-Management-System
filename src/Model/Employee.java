@@ -19,6 +19,7 @@ public class Employee {
     private final String username;
     private String password;
     private Role role;
+    private String email;
 
 
     /**
@@ -30,13 +31,15 @@ public class Employee {
      * @param password employee login password
      * @param role employee assigned role
      */
-    public Employee(String employeeId, String name, String username, String password, Role role) {
+    public Employee(String employeeId, String name, String username, String password, 
+                    Role role, String email) {
 
         this.employeeId = employeeId;
         this.name = name;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.email = email;
     }
 
     /**
@@ -76,12 +79,30 @@ public class Employee {
     }
 
     /**
+     * Returns the employee email.
+     *
+     * @return employee email
+     */
+    public String getEmployeeEmail() {
+        return email;
+    }
+
+    /**
      * Updates the employee role.
      *
      * @param role new employee role
      */
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    /**
+     * Updates the employee email.
+     *
+     * @param email new employee email
+     */
+    public void setRole(String email) {
+        this.email = email;
     }
 
     /**

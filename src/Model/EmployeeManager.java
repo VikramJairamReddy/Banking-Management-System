@@ -33,9 +33,9 @@ public class EmployeeManager {
         employeesById = new HashMap<>();
         employeesByUsername = new HashMap<>();
 
-        addEmployee("Administrator", "admin", "admin123", Role.ADMIN);
-        addEmployee("Manager", "manager", "manager123", Role.MANAGER);
-        addEmployee("Employee", "employee", "employee123", Role.EMPLOYEE);
+        addEmployee("Administrator", "admin", "admin123", Role.ADMIN, "admin@gmail.com");
+        addEmployee("Manager", "manager", "manager123", Role.MANAGER, "manager@gmail.com");
+        addEmployee("Employee", "employee", "employee123", Role.EMPLOYEE, "employee@gmail.com");
     }
 
     /**
@@ -71,7 +71,7 @@ public class EmployeeManager {
      * @param role employee role
      * @return created employee
      */
-    public void addEmployee(String name, String username, String password, Role role) {
+    public void addEmployee(String name, String username, String password, Role role, String email) {
 
         if(usernameExists(username)) {
             throw new IllegalArgumentException("Username already exists");
@@ -79,7 +79,7 @@ public class EmployeeManager {
 
         String employeeId = generateEmployeeId();
 
-        Employee employee = new Employee(employeeId, name, username.toLowerCase(), password, role);
+        Employee employee = new Employee(employeeId, name, username.toLowerCase(), password, role, email);
         employeesById.put(employeeId.toLowerCase(), employee);
         employeesByUsername.put(username, employee);
     }
