@@ -36,6 +36,7 @@ public class ManageAccountController {
         frame = new ManageAccountFrame();
         if(!PermissionManager.canRemoveAccount()) {
             frame.showMessage("You cannot remove accounts");
+            frame.dispose();
             return;
         }
         dashboard.showDashboard(false);
@@ -90,9 +91,11 @@ public class ManageAccountController {
     
         String search = frame.getSearchField().getText().trim();
     
+        selectedAccountNumber = null;
+        frame.clearDetails();
+
         if(search.isEmpty()) {
             frame.clearTable();
-            selectedAccountNumber = null;
             return;
         }
     
