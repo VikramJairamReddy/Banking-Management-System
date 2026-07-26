@@ -93,9 +93,9 @@ public class ManageAccountController {
     
         selectedAccountNumber = null;
         frame.clearDetails();
+        frame.clearTable();
 
         if(search.isEmpty()) {
-            frame.clearTable();
             return;
         }
     
