@@ -12,6 +12,7 @@
 
 package Model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -122,6 +123,15 @@ public class EmployeeManager {
         return employeesByUsername.get(username.toLowerCase());
     }
 
+    /**
+     * Updates an existing employee's role and email.
+     * Finds the employee using the employee ID and the updated role and email values.
+     *
+     * @param employeeId employee ID of the employee to update
+     * @param role new employee role
+     * @param email new employee email address
+     * @return true if employee was updated successfully, false if employee was not found
+     */
     public boolean updateEmployee(String employeeId, Role role, String email) {
 
         Employee employee = findEmployeeById(employeeId);
@@ -134,6 +144,30 @@ public class EmployeeManager {
         employee.setEmail(email);
     
         return true;
+    }
+
+    /**
+     * Searches employees using employee ID, name, or username.
+     *
+     * @param search search text
+     * @return matching employees
+     */
+    public Collection<Employee> searchEmployees(String search) {
+
+        Collection<Employee> results = new ArrayList<>();
+        String value = search.toLowerCase();
+
+        for(Employee employee : employeesById.values()) {
+
+            if(employee.getEmployeeId().toLowerCase().contains(value) || 
+                employee.getName().toLowerCase().contains(value) || 
+                employee.getUsername().toLowerCase().contains(value)) {
+
+                results.add(employee);
+            }
+        }
+
+        return results;
     }
 
     /**
