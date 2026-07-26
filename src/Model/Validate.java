@@ -55,4 +55,14 @@ public class Validate {
     public static boolean isValidAmount(double amount) {
         return amount > 0;
     }
+
+    /**
+     * Method to Validate email format.
+     *
+     * @param email email address
+     * @return true if email format is valid, otherwise false
+     */
+    public static boolean isValidEmail(String email) {
+        return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
+    }
 }
