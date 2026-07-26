@@ -271,6 +271,7 @@ public class ManageAccountFrame extends JFrame {
         typeLabel.setText("-");
         balanceLabel.setText("-");
         phoneLabel.setText("-");
+        searchField.setText("");
 
         removeButton.setEnabled(false);
         removeButton.setBackground(new Color(55, 65, 81));
