@@ -122,6 +122,20 @@ public class EmployeeManager {
         return employeesByUsername.get(username.toLowerCase());
     }
 
+    public boolean updateEmployee(String employeeId, Role role, String email) {
+
+        Employee employee = findEmployeeById(employeeId);
+    
+        if(employee == null) {
+            return false;
+        }
+    
+        employee.setRole(role);
+        employee.setEmail(email);
+    
+        return true;
+    }
+
     /**
      * Returns all employees.
      *

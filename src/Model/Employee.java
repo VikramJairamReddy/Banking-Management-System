@@ -101,7 +101,7 @@ public class Employee {
      *
      * @param email new employee email
      */
-    public void setRole(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
