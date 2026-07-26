@@ -65,9 +65,14 @@ public class EmployeeManagementFrame extends JFrame {
         panel.setBorder(new EmptyBorder(10, 10, 10,10));
 
         searchField = new JTextField(25);
+        
+        updateButton = new JButton("Update");
+        buttonAppearance(updateButton, new Color(55, 65, 81));
+        updateButton.setEnabled(false);
 
         panel.add(new JLabel("Search Employees:"));
         panel.add(searchField);
+        panel.add(updateButton);
 
         return panel;
     }
@@ -131,13 +136,6 @@ public class EmployeeManagementFrame extends JFrame {
         detailsPanel.add(new JLabel("Email:"));
         emailLabel = new JLabel("-");
         detailsPanel.add(emailLabel);
-
-        detailsPanel.add(new JLabel());
-
-        updateButton = new JButton("Update");
-        buttonAppearance(updateButton, new Color(41, 112, 204));
-        updateButton.setEnabled(false);
-        detailsPanel.add(updateButton);
 
         panel.add(detailsPanel, BorderLayout.SOUTH);
 
