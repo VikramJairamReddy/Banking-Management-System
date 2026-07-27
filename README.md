@@ -1,55 +1,68 @@
 # Banking Management System
 
-A Java Swing application using MVC architecture and OOP principles. The system allows users to manage bank accounts, perform transactions, and track account activity through a graphical user interface built with Java Swing.
+A Java Swing banking application built using MVC architecture and OOP principles.  
+The system allows employees to manage bank accounts, perform transactions, and 
+manage users through graphical interface.
 
 ## Features
 
-### Authentication & User Management
-- Secure user login system
-- Support for multiple user roles:
+### Login & User Management
+- Secure employee login system
+- Supports multiple roles:
   - Admin
   - Manager
   - Employee
 - Role-based access control
-- Permission based feature access
-- Current user management
-- Secure logout functionality
+- Different permissions for different users
+- Current user tracking
+- Secure logout
+
+### Employee Management
+- Add new employees
+- Search employees by:
+  - Employee ID
+  - Name
+  - Username
+- View employee details
+- Update employee role and email
+- Remove employees
+- Unique employee ID generation
 
 ### Account Management
 - Create Savings and Checking accounts
-- Live account search by:
+- Search accounts by:
   - Account number
   - Account holder name
-- View detailed account information
-- Remove accounts based on user permissions
-- Unique account number generation
-- Input validation and exception handling
+- View account details
+- Remove accounts based on permissions
+- Generate unique account numbers
+- Input validation and error handling
 
 ### Transaction Management
-- Deposit funds
-- Withdraw funds
+- Deposit money
+- Withdraw money
 - Transfer money between accounts
-- Unique transaction ID generation
-- Maintain complete transaction history
-- View detailed transaction information through double-click
+- Generate unique transaction IDs
+- Store transaction history
+- View transaction details
 
 ### Transaction Search & Filtering
 - Search transactions by:
   - Account number
   - Transaction ID
   - Date
-- Filter transactions by transaction type
-- Sort transactions by:
+- Filter by transaction type
+- Sort transactions:
   - Newest first
   - Oldest first
 - Reset search and filter options
 
 ### Dashboard
-- User-friendly banking dashboard
-- Displays total number of accounts
-- Displays today's transaction count
-- Shows logged-in username and role
-- Dynamically enables and disables features based on user permissions
+- Displays logged-in user information
+- Shows user role
+- Displays total accounts
+- Displays today's transactions
+- Enables or disables features based on permissions
 
 ## Technologies
 
@@ -61,7 +74,7 @@ A Java Swing application using MVC architecture and OOP principles. The system a
 - Exception Handling
 - Git & GitHub
 
-## OOP Concepts
+## OOP Concepts Used
 
 - Abstraction
 - Encapsulation
@@ -75,13 +88,16 @@ src/
 ├── Controller/
 │   ├── BankController.java
 │   ├── CreateAccountController.java
+│   ├── CreateEmployeeController.java
 │   ├── DashboardController.java
+│   ├── EmployeeManagementController.java
 │   ├── FindAccountController.java
 │   ├── LoginController.java
 │   ├── ManageAccountController.java
 │   ├── PermissionManager.java
 │   ├── TransactionController.java
 │   ├── TransactionHistoryController.java
+│   ├── UpdateEmployeeController.java
 │   └── UserManagementController.java
 │
 ├── Model/
@@ -100,14 +116,47 @@ src/
 ├── View/
 │   ├── AccountResultFrame.java
 │   ├── CreateAccountFrame.java
+│   ├── CreateEmployeeFrame.java
 │   ├── DashboardFrame.java
+│   ├── EmployeeManagementFrame.java
 │   ├── FindAccountFrame.java
 │   ├── LoginFrame.java
 │   ├── ManageAccountFrame.java
 │   ├── TransactionFrame.java
 │   ├── TransactionHistoryFrame.java
+│   ├── UpdateEmployeeFrame.java
 │   └── UserManagementFrame.java
 │
 ├── .gitignore
 ├── Main.java
 └── README.md
+```
+## Access Permissions
+
+### Admin
+- Full access to banking operations
+- Manage employees
+- Manage accounts
+- View transaction history
+- Perform all transactions
+
+### Manager
+- Create and search accounts
+- Perform banking transactions
+- View transaction history
+- Manage allowed account operations
+
+### Employee
+- Create accounts
+- Search accounts
+- Perform daily banking operations
+- Restricted from administrative and transaction features
+
+## Future Enhancements
+- Satabase - MySQL
+- Account update
+- Interest calculation for savings accounts
+
+## Author
+
+Ganta Vikram Jairam Reddy
