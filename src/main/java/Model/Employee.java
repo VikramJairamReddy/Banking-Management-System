@@ -106,6 +106,18 @@ public class Employee {
     }
 
     /**
+     * Returns the employee password.
+     *
+     * This method is only for temporary, which is used for database operations
+     * when storing employee data.
+     *
+     * @return employee password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
      * Checks whether the entered password matches
      * the employee's stored password.
      *
