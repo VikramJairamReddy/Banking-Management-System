@@ -190,6 +190,57 @@ public class EmployeeDAO {
     }
 
     /**
+     * Searches employees by employee ID, name, or username.
+     *
+     * @param search search keyword
+     * @return list of matching employees
+     */
+    public List<Employee> searchEmployees(String search) {
+
+        List<Employee> results = new ArrayList<>();
+
+        String sql = "SELECT * FROM Employees "
+                + "WHERE LOWER(employeeId) LIKE ? "
+                + "OR LOWER(name) LIKE ? "
+                + "OR LOWER(username) LIKE ?";
+
+        try {
+            
+            PreparedStatement statement = connection.prepareStatement(sql);
+            String value = "%" + search.toLowerCase() + "%";
+
+            statement.setString(1, value);
+            statement.setString(2, value);
+            statement.setString(3, value);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+
+                String employeeId = result.getString("employeeId");
+                String name = result.getString("name");
+                String username = result.getString("username");
+                String password = result.getString("password");
+                String roleValue = result.getString("role");
+                String email = result.getString("email");
+
+                Role role = Role.valueOf(roleValue);
+
+                Employee employee = new Employee(employeeId, name, username, password, role, email);
+
+                results.add(employee);
+            }
+
+        } 
+        catch(SQLException e) {
+            System.out.println("Failed to search employees.");
+            e.printStackTrace();
+        }
+
+        return results;
+    }
+
+    /**
      * Updates employee information in the database.
      *
      * @param employee employee object with updated information
