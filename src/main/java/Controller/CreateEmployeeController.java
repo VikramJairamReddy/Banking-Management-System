@@ -22,6 +22,7 @@ public class CreateEmployeeController {
     private final CreateEmployeeFrame frame;
     private final UserManagementController userManagementController;
     private final EmployeeDAO employeeDAO;
+    private int defaultEmployeeID = 1004;
 
     /**
      * Creates create employee controller.
@@ -69,7 +70,7 @@ public class CreateEmployeeController {
 
         try {
 
-            String employeeId = "EMP" + System.currentTimeMillis();
+            String employeeId = "EMP" + defaultEmployeeID++;
             employeeDAO.addEmployee(new Employee(employeeId, name, username, password, 
                         frame.getSelectedRole(), email));
 

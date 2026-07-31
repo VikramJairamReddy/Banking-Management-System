@@ -70,6 +70,9 @@ manage users through graphical interface.
 - Java Swing
 - MVC Architecture
 - Object-Oriented Programming (OOP)
+- MySQL
+- JDBC
+- Maven
 - Java Collections Framework
 - Exception Handling
 - Git & GitHub
@@ -85,51 +88,59 @@ manage users through graphical interface.
 
 ```text
 src/
-├── Controller/
-│   ├── BankController.java
-│   ├── CreateAccountController.java
-│   ├── CreateEmployeeController.java
-│   ├── DashboardController.java
-│   ├── EmployeeManagementController.java
-│   ├── FindAccountController.java
-│   ├── LoginController.java
-│   ├── ManageAccountController.java
-│   ├── PermissionManager.java
-│   ├── TransactionController.java
-│   ├── TransactionHistoryController.java
-│   ├── UpdateEmployeeController.java
-│   └── UserManagementController.java
+├── main/
+│    └── java/
+│        ├── Controller/
+│        │   ├── BankController.java
+│        │   ├── CreateAccountController.java
+│        │   ├── CreateEmployeeController.java
+│        │   ├── DashboardController.java
+│        │   ├── EmployeeManagementController.java
+│        │   ├── FindAccountController.java
+│        │   ├── LoginController.java
+│        │   ├── ManageAccountController.java
+│        │   ├── PermissionManager.java
+│        │   ├── TransactionController.java
+│        │   ├── TransactionHistoryController.java
+│        │   ├── UpdateEmployeeController.java
+│        │   └── UserManagementController.java
+│        │
+│        ├── Model/
+│        │   ├── Account.java
+│        │   ├── Bank.java
+│        │   ├── CheckingAccount.java
+│        │   ├── CurrentUser.java
+│        │   ├── Employee.java
+│        │   ├── LoginModel.java
+│        │   ├── Role.java
+│        │   ├── SavingsAccount.java
+│        │   ├── Transaction.java
+│        │   └── Validate.java
+│        │
+│        ├── View/
+│        │   ├── AccountResultFrame.java
+│        │   ├── CreateAccountFrame.java
+│        │   ├── CreateEmployeeFrame.java
+│        │   ├── DashboardFrame.java
+│        │   ├── EmployeeManagementFrame.java
+│        │   ├── FindAccountFrame.java
+│        │   ├── LoginFrame.java
+│        │   ├── ManageAccountFrame.java
+│        │   ├── TransactionFrame.java
+│        │   ├── TransactionHistoryFrame.java
+│        │   ├── UpdateEmployeeFrame.java
+│        │   └── UserManagementFrame.java
+│        │
+│        ├── Database/
+│        │   └── DatabaseConnection.java
+│        ├── DAO/
+│        │   └── EmployeeDAO.java
+│        │
+│        └── Main.java
 │
-├── Model/
-│   ├── Account.java
-│   ├── Bank.java
-│   ├── CheckingAccount.java
-│   ├── CurrentUser.java
-│   ├── Employee.java
-│   ├── EmployeeManager.java
-│   ├── LoginModel.java
-│   ├── Role.java
-│   ├── SavingsAccount.java
-│   ├── Transaction.java
-│   └── Validate.java
-│
-├── View/
-│   ├── AccountResultFrame.java
-│   ├── CreateAccountFrame.java
-│   ├── CreateEmployeeFrame.java
-│   ├── DashboardFrame.java
-│   ├── EmployeeManagementFrame.java
-│   ├── FindAccountFrame.java
-│   ├── LoginFrame.java
-│   ├── ManageAccountFrame.java
-│   ├── TransactionFrame.java
-│   ├── TransactionHistoryFrame.java
-│   ├── UpdateEmployeeFrame.java
-│   └── UserManagementFrame.java
-│
-├── .gitignore
-├── Main.java
-└── README.md
+├── pom.xml
+├── README.md
+└── .gitignore
 ```
 ## Access Permissions
 
@@ -152,10 +163,30 @@ src/
 - Perform daily banking operations
 - Restricted from administrative and transaction features
 
+## Database
+The application uses MySQL for permanent data storage.
+
+Tables:
+- Employees
+- Customers
+- Accounts
+
 ## Future Enhancements
-- Satabase - MySQL
+- Database - MySQL
 - Account update
 - Interest calculation for savings accounts
+
+## AI Usage
+
+AI tools were used as development assistant throughout this project. They helped with learning unfamiliar concepts, reviewing implementation approaches, debugging issues, and improving documentation.
+
+AI was primarily used for:
+- Understanding database design and JDBC integration.
+- Discussing software architecture decisions.
+- Reviewing code quality and identifying improvements.
+- Assisting with debugging and documentation.
+
+All system design decisions, implementation, testing, and final integration were completed and verified by me.
 
 ## Author
 
