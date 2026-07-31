@@ -22,7 +22,6 @@ public class CreateEmployeeController {
     private final CreateEmployeeFrame frame;
     private final UserManagementController userManagementController;
     private final EmployeeDAO employeeDAO;
-    private int defaultEmployeeID = 1004;
 
     /**
      * Creates create employee controller.
@@ -70,8 +69,8 @@ public class CreateEmployeeController {
 
         try {
 
-            String employeeId = "EMP" + defaultEmployeeID++;
-            employeeDAO.addEmployee(new Employee(employeeId, name, username, password, 
+            // Employee ID is generated in EmployeeDAO.java
+            employeeDAO.addEmployee(new Employee(null, name, username, password, 
                         frame.getSelectedRole(), email));
 
             frame.showMessage("Employee created successfully");

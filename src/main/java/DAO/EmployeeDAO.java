@@ -2,6 +2,7 @@
  * Provides database operations for Employee records.
  *
  * Responsibilities:
+ * - Generating Employee ID
  * - Add, find, update, and delete employees in the MySQL database.
  * - Convert database rows into Employee objects.
  *
@@ -49,9 +50,10 @@ public class EmployeeDAO {
 
         try {
 
+            String employeeId = generateEmployeeId();
             PreparedStatement statement = connection.prepareStatement(sql);
 
-            statement.setString(1, employee.getEmployeeId());
+            statement.setString(1, employeeId);
             statement.setString(2, employee.getUsername());
             statement.setString(3, employee.getPassword());
             statement.setString(4, employee.getRole().toString());
@@ -304,5 +306,42 @@ public class EmployeeDAO {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Generates a unique employee ID.
+     *
+     * Finds the highest existing employee ID and creates the next ID.
+     *
+     * @return generated employee ID
+     */
+    private String generateEmployeeId() {
+
+        String sql = "SELECT MAX(employeeId) FROM Employees";
+        int nextId = 1001;
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+
+            if(result.next()) {
+
+                String lastId = result.getString(1);
+
+                if(lastId != null) {
+                    int number = Integer.parseInt(lastId.substring(3));
+                    nextId = number + 1;
+                }
+            }
+
+
+        } 
+        catch(SQLException e) {
+            System.out.println("Failed to generate employee ID.");
+            e.printStackTrace();
+        }
+
+        return "EMP" + nextId;
     }
 }
