@@ -12,7 +12,7 @@
 package Controller;
 
 import Model.Employee;
-import Model.EmployeeManager;
+import DAO.EmployeeDAO;
 import View.UpdateEmployeeFrame;
 
 public class UpdateEmployeeController {
@@ -20,6 +20,7 @@ public class UpdateEmployeeController {
     private final UpdateEmployeeFrame frame;
     private final Employee employee;
     private final EmployeeManagementController employeeController;
+    private final EmployeeDAO employeeDAO;
 
     /**
      * Creates update employee controller.
@@ -33,6 +34,7 @@ public class UpdateEmployeeController {
         this.employee = employee;
         this.employeeController = employeeController;
         this.employeeController.showEmployeeWindow(false);
+        this.employeeDAO = new EmployeeDAO();
 
         frame = new UpdateEmployeeFrame(employee);
 
@@ -43,7 +45,7 @@ public class UpdateEmployeeController {
     }
 
     /**
-     * Updates selected employee role and email using EmployeeManager.
+     * Updates selected employee role and email using Database.
      */
     private void updateEmployee() {
 
@@ -58,8 +60,10 @@ public class UpdateEmployeeController {
             return;
         }
 
-        boolean updated = EmployeeManager.getInstance().updateEmployee(
-                        employee.getEmployeeId(), frame.getSelectedRole(), email);
+        employee.setRole(frame.getSelectedRole());
+        employee.setEmail(email);
+
+        boolean updated = employeeDAO.updateEmployee(employee);
 
         if(updated) {
             frame.showMessage("Employee updated successfully");

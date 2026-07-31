@@ -19,14 +19,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import Model.Employee;
-import Model.EmployeeManager;
+import DAO.EmployeeDAO;
 import View.EmployeeManagementFrame;
 
 public class EmployeeManagementController {
 
     private final EmployeeManagementFrame frame;
     private final DashboardController dashboard;
-    private final EmployeeManager employeeManager;
+    private final EmployeeDAO employeeDAO;
 
     private String selectedEmployeeId;
 
@@ -38,7 +38,7 @@ public class EmployeeManagementController {
     public EmployeeManagementController(DashboardController dashboard) {
 
         this.dashboard = dashboard;
-        this.employeeManager = EmployeeManager.getInstance();
+        this.employeeDAO = new EmployeeDAO();
 
         frame = new EmployeeManagementFrame();
 
@@ -107,7 +107,7 @@ public class EmployeeManagementController {
             return;
         }
 
-        Collection<Employee> employees = employeeManager.searchEmployees(search);
+        Collection<Employee> employees = employeeDAO.searchEmployees(search);
 
         loadEmployees(employees);
     }
@@ -139,7 +139,7 @@ public class EmployeeManagementController {
     private void showSelectedEmployee(int row) {
 
         selectedEmployeeId = (String) frame.getEmployeeTable().getValueAt(row, 0);
-        Employee employee = employeeManager.findEmployeeById(selectedEmployeeId);
+        Employee employee = employeeDAO.findById(selectedEmployeeId);
 
         if(employee == null) {
             return;
@@ -166,7 +166,7 @@ public class EmployeeManagementController {
             return;
         }
     
-        Employee employee = employeeManager.findEmployeeById(selectedEmployeeId);
+        Employee employee = employeeDAO.findById(selectedEmployeeId);
     
         if(employee == null) {
             frame.showMessage("Employee not found");
@@ -179,7 +179,7 @@ public class EmployeeManagementController {
     /**
      * Removes the selected employee after confirmation.
      *
-     * Deletes the employee record from EmployeeManager and refreshes the employee table.
+     * Deletes the employee record from Database and refreshes the employee table.
      */
     private void removeEmployee() {
 
@@ -192,7 +192,7 @@ public class EmployeeManagementController {
             return;
         }
     
-        boolean removed = employeeManager.removeEmployeeById(selectedEmployeeId);
+        boolean removed = employeeDAO.deleteEmployee(selectedEmployeeId);
     
         if(removed) {
             frame.showMessage("Employee removed successfully");

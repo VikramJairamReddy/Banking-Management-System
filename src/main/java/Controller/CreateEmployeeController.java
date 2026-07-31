@@ -12,7 +12,8 @@
 
 package Controller;
 
-import Model.EmployeeManager;
+import DAO.EmployeeDAO;
+import Model.Employee;
 import Model.Validate;
 import View.CreateEmployeeFrame;
 
@@ -20,6 +21,7 @@ public class CreateEmployeeController {
 
     private final CreateEmployeeFrame frame;
     private final UserManagementController userManagementController;
+    private final EmployeeDAO employeeDAO;
 
     /**
      * Creates create employee controller.
@@ -30,6 +32,8 @@ public class CreateEmployeeController {
 
         this.userManagementController = userManagementController;
         userManagementController.showUserManagement(false);
+
+        employeeDAO = new EmployeeDAO();
 
         frame = new CreateEmployeeFrame();
 
@@ -65,8 +69,9 @@ public class CreateEmployeeController {
 
         try {
 
-            EmployeeManager.getInstance().addEmployee(name, username, password,
-                        frame.getSelectedRole(), email);
+            String employeeId = "EMP" + System.currentTimeMillis();
+            employeeDAO.addEmployee(new Employee(employeeId, name, username, password, 
+                        frame.getSelectedRole(), email));
 
             frame.showMessage("Employee created successfully");
             closeWindow();

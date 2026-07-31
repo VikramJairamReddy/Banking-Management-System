@@ -11,15 +11,17 @@
 
 package Model;
 
+import DAO.EmployeeDAO;
+
 public class LoginModel {
 
-    private final EmployeeManager employeeManager;
+    private final EmployeeDAO employeeDAO;
 
     /**
      * Creates the login model.
      */
     public LoginModel() {
-        employeeManager = EmployeeManager.getInstance();
+        employeeDAO = new EmployeeDAO();
     }
 
     /**
@@ -31,7 +33,7 @@ public class LoginModel {
      */
     public Employee validateLogin(String username, String password) {
 
-        Employee employee = employeeManager.findEmployeeByUsername(username);
+        Employee employee = employeeDAO.findByUsername(username);
 
         if(employee == null || !employee.checkPassword(password)) {
             throw new IllegalArgumentException("Invalid username or password.");
