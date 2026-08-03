@@ -109,6 +109,20 @@ public abstract class Account {
         return balance;
     }
 
+    /**
+     * Sets the account balance when loading account data from database.
+     *
+     * @param balance existing account balance
+     */
+    public void setBalance(double balance) {
+
+        if(balance < 0) {
+            throw new IllegalArgumentException("Balance cannot be negative");
+        }
+
+        this.balance = balance;
+    }
+
     @Override
     public String toString() {
         return String.format("[type='%s', accountNumber='%s', balance=%.2f, customer=%s]",
