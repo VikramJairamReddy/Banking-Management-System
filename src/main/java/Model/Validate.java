@@ -65,4 +65,14 @@ public class Validate {
     public static boolean isValidEmail(String email) {
         return email.matches("^[A-Za-z0-9+_.-]+@(.+)$");
     }
+
+    /**
+     * Method to Validate address format.
+     *
+     * @param address address
+     * @return true if address format is valid, otherwise false
+     */
+    public static boolean isValidAddress(String address) {
+        return address != null && address.length() > 5;
+    }
 }
