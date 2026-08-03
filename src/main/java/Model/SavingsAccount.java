@@ -11,8 +11,12 @@ package Model;
 public class SavingsAccount extends Account {
     private double interestRate;
 
-    public SavingsAccount(String accountNumber, String accountHolderName, String phoneNumber, double interestRate) {
-        super(accountNumber, accountHolderName, phoneNumber);
+    public SavingsAccount(String accountNumber, Customer customer, double interestRate) {
+        super(accountNumber, customer);
+        
+        if(interestRate < 0) {
+            throw new IllegalArgumentException("Interest rate cannot be negative");
+        }
         this.interestRate = interestRate;
     }
 

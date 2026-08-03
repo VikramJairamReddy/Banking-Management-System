@@ -10,10 +10,11 @@ package Model;
 
 public class CheckingAccount extends Account {
         
-    private static final double OVERDRAFT_LIMIT = 300;
+    private  double overdraftLimit;
 
-    public CheckingAccount(String accountNumber, String accountHolderName, String phoneNumber) {
-        super(accountNumber, accountHolderName, phoneNumber);
+    public CheckingAccount(String accountNumber, Customer customer, double overdraftLimit) {
+        super(accountNumber, customer);
+        this.overdraftLimit = overdraftLimit;
     }
 
     /**
@@ -23,7 +24,7 @@ public class CheckingAccount extends Account {
      **/
     @Override
     public boolean withdraw(double amount) {
-        if(amount > 0 && amount <= getBalance() + OVERDRAFT_LIMIT) {
+        if(amount > 0 && amount <= getBalance() + overdraftLimit) {
             manageBalance(-amount);
             return true;
         }
@@ -52,7 +53,7 @@ public class CheckingAccount extends Account {
      * @return available withdrawal amount
      */
     public double possibleWithdraw() {
-        return getBalance() + OVERDRAFT_LIMIT;
+        return getBalance() + overdraftLimit;
     }
 
     //Implements the getAccountType abstract method to return "Checking" as the account type.
@@ -68,5 +69,14 @@ public class CheckingAccount extends Account {
      */
     public double getOverdraftUsed() {
         return (getBalance() < 0)? Math.abs(getBalance()) : 0;
+    }
+
+    /**
+     * Returns the overdraft limit for this account.
+     *
+     * @return overdraft limit
+     */
+    public double getOverdraftLimit() {
+        return overdraftLimit;
     }
 }
