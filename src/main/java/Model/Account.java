@@ -31,31 +31,26 @@ public abstract class Account {
     public abstract double possibleWithdraw();
 
     private final String ACCOUNT_NUMBER;
-    private String accountHolderName;
+    private final Customer customer;
     private double balance = 0;
-    private String phoneNumber;
 
     /**
      * Creates a new account.
      *
      * @param accountNumber unique account number
-     * @param accountHolderName account holder's name
-     * @param phoneNumber account holder's phone number
+     * @param customer the customer who owns this account
      */
-    public Account(String accountNumber, String accountHolderName, String phoneNumber) {
+    public Account(String accountNumber, Customer customer) {
 
         if(!Validate.isValidAccountNumber(accountNumber)) {
             throw new IllegalArgumentException("Invalid Account Number");
         }
-        if(!Validate.isValidName(accountHolderName)) {
-            throw new IllegalArgumentException("Invalid name");
+        if(customer == null) {
+            throw new IllegalArgumentException("Customer cannot be null");
         }
-        if(!Validate.isValidPhoneNumber(phoneNumber)) {
-            throw new IllegalArgumentException("Invalid Phone Number");
-        }
+        
         this.ACCOUNT_NUMBER = accountNumber;
-        this.accountHolderName = accountHolderName;
-        this.phoneNumber = phoneNumber;
+        this.customer = customer;
     }
 
     /**
@@ -83,27 +78,6 @@ public abstract class Account {
         return false;
     }
 
-    // Setters for account properties
-    public boolean setAccountHolderName(String name) {
-
-        if(!Validate.isValidName(name)) {
-            return false;
-        }
-        this.accountHolderName = name;
-
-        return true;
-    }
-
-    public boolean setPhoneNumber(String phoneNumber) {
-
-        if(!Validate.isValidPhoneNumber(phoneNumber)) {
-            return false;
-        }
-        this.phoneNumber = phoneNumber;
-
-        return true;
-    }
-
     /** Protected method only allows subclasses to modify the balance, 
      * ensuring that the balance changes through the deposit and withdraw methods only.
      * 
@@ -119,36 +93,33 @@ public abstract class Account {
         return ACCOUNT_NUMBER;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
     public String getAccountHolderName() {
-        return accountHolderName;
+        return customer.getName();
+    }
+
+    public String getPhoneNumber() {
+        return customer.getPhone();
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    /**
-     * Returns a formatted string representation of the account.
-     */
     @Override
     public String toString() {
-        return String.format
-            ("[type='%s', accountNumber='%s', name='%s', balance=%.2f, phone='%s']",
-            getAccountType(), ACCOUNT_NUMBER, accountHolderName, balance, phoneNumber);
+        return String.format("[type='%s', accountNumber='%s', balance=%.2f, customer=%s]",
+                getAccountType(), ACCOUNT_NUMBER, balance, customer);
     }
 
-    /**
-     * Returns a user friendly display string for the account.
-     */
     public String toDisplayString() {
         return "\nAccount Number : " + getAccountNumber() + "\n" +
-               "Customer Name    : " + getAccountHolderName() + "\n" +
-               "Account Type     : " + getAccountType() + "\n" +
-               "Balance          : $" + String.format("%.2f", getBalance()) + "\n" +
+               "Account Type   : " + getAccountType() + "\n" +
+               "Balance        : $" + String.format("%.2f", getBalance()) + "\n" +
+               customer.toDisplayString() +
                "---------------------------------\n";
     }
 }
