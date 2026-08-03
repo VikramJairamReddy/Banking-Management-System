@@ -24,6 +24,7 @@ public class Bank {
     private static final String WITHDRAW = "Withdraw";
     private static final String TRANSFER = "Transfer";
     private static final double INTEREST_RATE = 6.0;
+    private static final double OVERDRAFT_LIMIT = 300.0;
     private static Bank instance;
 
     private long nextAccountNumber;
@@ -422,6 +423,16 @@ public class Bank {
      */
     public static double getInterestRate() {
         return INTEREST_RATE;
+    }
+
+    /**
+     * Returns the Overdraft limit applied on the account.
+     * It can only be called on the class name because it is a static method
+     * 
+     * @return the Overdraft limit applied on the checking accouont
+     */
+    public static double getOverdraftLimit() {
+        return OVERDRAFT_LIMIT;
     }
 
     public static Bank getInstance() {

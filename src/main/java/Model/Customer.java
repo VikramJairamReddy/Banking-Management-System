@@ -35,9 +35,11 @@ public class Customer {
             throw new IllegalArgumentException("Invalid phone number");
         }
         
-        if(!Validate.isValidEmail(email)) {
-            throw new IllegalArgumentException("Invalid email");
-        }
+        // Currently email validation is not implementeed because we haven't added in GUI yet.
+
+        // if(!Validate.isValidEmail(email)) {
+        //     throw new IllegalArgumentException("Invalid email");
+        // }
 
         //Currently address validation is not implementeed because we haven't added in GUI yet. 
         // Once we add address in GUI, we can uncomment the below code to validate address.'
@@ -136,9 +138,10 @@ public class Customer {
      */
     public boolean setEmail(String email) {
 
-        if(!Validate.isValidEmail(email)) {
-            return false;
-        }
+        // Currently email validation is not implementeed because we haven't added in GUI yet.
+        // if(!Validate.isValidEmail(email)) {
+        //     return false;
+        // }
 
         this.email = email;
         return true;
@@ -151,7 +154,7 @@ public class Customer {
      */
     public boolean setAddress(String address) {
         // Currently address validation is not implementeed because we haven't added in GUI yet.
-        
+
         // if(!Validate.isValidAddress(address)) {
         //     return false;
         // }

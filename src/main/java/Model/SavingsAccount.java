@@ -21,8 +21,7 @@ public class SavingsAccount extends Account {
     }
 
     /**
-     * Returns the maximum amount that can still be withdrawn,
-     * taking the overdraft limit into count.
+     * Returns the maximum amount that can still be withdrawn
      *
      * @return available withdrawal amount
      */
