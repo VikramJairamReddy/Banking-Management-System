@@ -4,6 +4,8 @@
  * It collects customer details such as:
  * - Name
  * - Phone number
+ * - Email
+ * - Address
  * - Account type (Savings or Checking)
  *
  * @author Ganta Vikram Jairam Reddy
@@ -18,6 +20,8 @@ public class CreateAccountFrame extends JFrame {
     
     private JTextField nameField;
     private JTextField phoneField;
+    private JTextField emailField;
+    private JTextField addressField;
     private JComboBox<String> accTypeBox;
 
     private JButton createButton;
@@ -28,7 +32,7 @@ public class CreateAccountFrame extends JFrame {
      */
     public CreateAccountFrame() {
         setTitle("Create Account");
-        setSize(400, 270);
+        setSize(450, 380);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
@@ -69,6 +73,30 @@ public class CreateAccountFrame extends JFrame {
 
         // Adding the phone number panel to the form Panel
         formPanel.add(phonePanel);
+
+            // -------- EMAIL PANEL --------
+        JPanel emailPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        JLabel emailLabel = new JLabel("Email:");
+        emailField = new JTextField(15);
+
+        emailPanel.add(emailLabel);
+        emailPanel.add(emailField);
+
+        // Adding email panel to form panel
+        formPanel.add(emailPanel);
+
+            // -------- ADDRESS PANEL --------
+        JPanel addressPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        JLabel addressLabel = new JLabel("Address:");
+        addressField = new JTextField(15);
+
+        addressPanel.add(addressLabel);
+        addressPanel.add(addressField);
+
+        // Adding the address panel to the form Panel
+        formPanel.add(addressPanel);
 
             // -------- ACCOUNT TYPE PANEL --------
         JPanel accTypePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -130,6 +158,25 @@ public class CreateAccountFrame extends JFrame {
     }
 
     /**
+     * Returns the email input field.
+     *
+     * @return email field
+     */
+    public JTextField getEmailField() {
+        return emailField;
+    }
+
+
+    /**
+     * Returns the address input field.
+     *
+     * @return address field
+     */
+    public JTextField getAddressField() {
+        return addressField;
+    }
+
+    /**
      * Returns the account type combobox so that listeners can be added.
      * 
      * @return account type combobox
@@ -154,6 +201,24 @@ public class CreateAccountFrame extends JFrame {
      */
     public String getEnteredPhoneNumber() {
         return phoneField.getText();
+    }
+
+    /**
+     * Returns the entered customer email.
+     * 
+     * @return entered customer email
+     */
+    public String getEnteredEmail() {
+        return emailField.getText();
+    }
+
+    /**
+     * Returns the entered customer address.
+     * 
+     * @return entered customer address
+     */
+    public String getEnteredAddress() {
+        return addressField.getText();
     }
 
     /**
