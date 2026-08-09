@@ -106,6 +106,41 @@ public class CustomerDAO {
     }
 
     /**
+     * Finds customer using email.
+     *
+     * @param email customer email
+     * @return customer object
+     */
+    public Customer findByEmail(String email) {
+
+        String sql = "SELECT * FROM Customers WHERE email = ?";
+    
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+    
+            statement.setString(1, email);
+    
+            ResultSet result = statement.executeQuery();
+    
+            if(result.next()) {
+                return new Customer(
+                        result.getString("customerId"),
+                        result.getString("name"),
+                        result.getString("phone"),
+                        result.getString("email"),
+                        result.getString("address"));
+            }
+    
+        } 
+        catch(SQLException e) {
+            System.out.println("Failed to find customer by email.");
+            e.printStackTrace();
+        }
+    
+        return null;
+    }
+
+    /**
      * Returns all customers.
      *
      * @return collection of customers
