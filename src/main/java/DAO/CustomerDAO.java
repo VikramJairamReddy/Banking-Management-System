@@ -41,8 +41,8 @@ public class CustomerDAO {
      */
     public boolean addCustomer(Customer customer) {
 
-        String sql = "INSERT INTO customers "
-                    + "(customer_id, name, phone, email, address) "
+        String sql = "INSERT INTO Customers "
+                    + "(customerId, name, phone, email, address) "
                     + "VALUES (?, ?, ?, ?, ?)";
 
         try {
@@ -76,7 +76,7 @@ public class CustomerDAO {
      */
     public Customer findById(String customerId) {
 
-        String sql = "SELECT * FROM customers WHERE customer_id = ?";
+        String sql = "SELECT * FROM Customers WHERE customerId = ?";
 
         try {
 
@@ -89,7 +89,7 @@ public class CustomerDAO {
             if(result.next()) {
 
                 return new Customer(
-                        result.getString("customer_id"),
+                        result.getString("customerId"),
                         result.getString("name"),
                         result.getString("phone"),
                         result.getString("email"),
@@ -114,7 +114,7 @@ public class CustomerDAO {
 
         Collection<Customer> customers = new ArrayList<>();
 
-        String sql = "SELECT customer_id FROM customers";
+        String sql = "SELECT customerId FROM Customers";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -123,7 +123,7 @@ public class CustomerDAO {
 
             while(result.next()) {
 
-                Customer customer = findById(result.getString("customer_id"));
+                Customer customer = findById(result.getString("customerId"));
 
                 if(customer != null) {
                     customers.add(customer);
@@ -148,8 +148,8 @@ public class CustomerDAO {
 
         Collection<Customer> customers = new ArrayList<>();
 
-        String sql = "SELECT customer_id FROM customers "
-                    + "WHERE customer_id LIKE ? OR name LIKE ? OR phone LIKE ? OR email LIKE ?";
+        String sql = "SELECT customerId FROM Customers "
+                    + "WHERE customerId LIKE ? OR name LIKE ? OR phone LIKE ? OR email LIKE ?";
 
         try {
 
@@ -165,7 +165,7 @@ public class CustomerDAO {
             ResultSet result = statement.executeQuery();
 
             while(result.next()) {
-                Customer customer = findById(result.getString("customer_id"));
+                Customer customer = findById(result.getString("customerId"));
 
                 if(customer != null) {
                     customers.add(customer);
@@ -188,9 +188,9 @@ public class CustomerDAO {
      */
     public boolean updateCustomer(Customer customer) {
 
-        String sql = "UPDATE customers SET "
+        String sql = "UPDATE Customers SET "
                     + "name=?, phone=?, email=?, address=? "
-                    + "WHERE customer_id=?";
+                    + "WHERE customerId=?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -222,7 +222,7 @@ public class CustomerDAO {
      */
     public boolean deleteCustomer(String customerId) {
 
-        String sql = "DELETE FROM customers WHERE customer_id=?";
+        String sql = "DELETE FROM Customers WHERE customerId=?";
 
         try {
 
@@ -250,7 +250,7 @@ public class CustomerDAO {
      */
     public String generateCustomerId() {
 
-        String sql = "SELECT MAX(customer_id) FROM customers";
+        String sql = "SELECT MAX(customerId) FROM Customers";
         int nextId = 100001;
 
         try {
