@@ -10,6 +10,9 @@ import Model.*;
 import java.util.Collection;
 import java.util.List;
 
+import DAO.AccountDAO;
+import DAO.CustomerDAO;
+
 public class BankController {
 
     private Bank bank;
@@ -23,11 +26,45 @@ public class BankController {
     /**
      * Requests creation of a new account.
      *
-     * @param account account to create
-     * @return true if successful, otherwise false
+     * @param name customer name
+     * @param phone customer phone number
+     * @param email customer email address
+     * @param address customer address
+     * @param type account type (Savings or Checking)
+     * @return the created account object if successful, otherwise null
      */
-    public boolean createAccount(Account account) {
-        return bank.createAccount(account);
+    public Account createAccount(String name, String phone, String email, String address, String type) {
+
+        CustomerDAO customerDAO = new CustomerDAO();
+        AccountDAO accountDAO = new AccountDAO();
+
+        String customerId = customerDAO.generateCustomerId();
+
+        Customer customer = new Customer(customerId, name, phone, email, address);
+
+        boolean success = customerDAO.addCustomer(customer);
+
+        if(!success) {
+            return null;
+        }
+
+        String accountNumber = accountDAO.generateAccountNumber();
+        Account account;
+
+        if("Savings".equals(type)) {
+            account = new SavingsAccount(accountNumber, customer, Bank.getInterestRate());
+        }
+        else {
+            account = new CheckingAccount(accountNumber, customer, Bank.getOverdraftLimit());
+        }
+
+        boolean accountCreated = accountDAO.addAccount(account);
+
+        if(!accountCreated) {
+            return null;
+        }
+
+        return account;
     }
 
     /**
