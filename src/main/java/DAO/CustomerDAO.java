@@ -107,6 +107,7 @@ public class CustomerDAO {
 
     /**
      * Finds customer using email.
+     * Used to check if email is already registered.
      *
      * @param email customer email
      * @return customer object
