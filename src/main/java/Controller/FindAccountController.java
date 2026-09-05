@@ -16,6 +16,7 @@ import View.AccountResultFrame;
 import Model.Account;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -55,8 +56,7 @@ public class FindAccountController {
             return;
         }
 
-        List<Account> accounts = new ArrayList<>();
-
+       Collection<Account> accounts = new ArrayList<>();
 
         if("Account Number".equals(searchType)) {
             // Since there cannot be multiple accounts with the same account number, 
@@ -68,7 +68,7 @@ public class FindAccountController {
             }
         } 
         else if("Customer Name".equals(searchType)) {
-            accounts = bankController.getAccountByName(searchValue);
+            accounts = bankController.searchAccounts(searchValue);
         }
 
         StringBuilder sb = new StringBuilder();

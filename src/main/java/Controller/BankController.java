@@ -7,6 +7,7 @@ package Controller;
 
 import Model.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +17,13 @@ import DAO.CustomerDAO;
 public class BankController {
 
     private Bank bank;
+    private CustomerDAO customerDAO;
+    private AccountDAO accountDAO;
 
     public BankController() {
         this.bank = Bank.getInstance();
+        this.customerDAO = new CustomerDAO();
+        this.accountDAO = new AccountDAO();
     }
 
     // -------- ACCOUNT --------
@@ -34,9 +39,6 @@ public class BankController {
      * @return the created account object if successful, otherwise null
      */
     public Account createAccount(String name, String phone, String email, String address, String type) {
-
-        CustomerDAO customerDAO = new CustomerDAO();
-        AccountDAO accountDAO = new AccountDAO();
 
         String customerId = customerDAO.generateCustomerId();
 
@@ -74,7 +76,7 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean removeAccount(String accountNumber) {
-        return bank.removeAccount(accountNumber);
+        return accountDAO.deleteAccount(accountNumber);
     }
 
     /**
@@ -84,17 +86,7 @@ public class BankController {
      * @return the account object if present, otherwise null
      */
     public Account getAccountByAccountNumber(String accountNumber) {
-        return bank.findAccount(accountNumber);
-    }
-
-    /**
-     * Requests to find accounts by customer name.
-     *
-     * @param customerName name of the customer
-     * @return list of account objects associated with the customer name
-     */
-    public List<Account> getAccountByName(String customerName) {
-        return bank.getAccountByName(customerName);
+        return accountDAO.findByAccountNumber(accountNumber);
     }
 
     /**
@@ -103,7 +95,7 @@ public class BankController {
      * @return the collection of account objects.
      */
     public Collection<Account> getAllAccounts() {
-        return bank.getAllAccounts();
+        return accountDAO.getAllAccounts();
     }
 
     /**
@@ -113,7 +105,7 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean accountExists(String accountNumber) {
-        return bank.accountExists(accountNumber);
+        return getAccountByAccountNumber(accountNumber) != null;
     }
 
     /**
@@ -123,7 +115,7 @@ public class BankController {
      * @return collection of matching accounts
      */
     public Collection<Account> searchAccounts(String search) {
-        return bank.searchAccounts(search);
+        return accountDAO.searchAccounts(search);
     }
 
     // -------- TRANSACTIONS --------
