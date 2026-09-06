@@ -1,5 +1,8 @@
 /**
- * Acts as a layer between the GUI and the model.
+ * Controller layer between the GUI and the banking model.
+ *
+ * Handles account, customer, and transaction operations by coordinating between 
+ * the view, model, and DAO classes.
  * 
  * @author Ganta Vikram Jairam Reddy
  */
@@ -7,7 +10,6 @@ package Controller;
 
 import Model.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 

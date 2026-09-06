@@ -43,6 +43,27 @@ public class Transaction {
         this.time = LocalDateTime.now();
     }
 
+    /**
+     * Creates a new transaction with a specified date and time to retrieve past transactions.
+     *
+     * @param transactionId unique transaction ID
+     * @param accountNumber associated account number
+     * @param secondAccountNumber other account involved in transfer
+     * @param transactionType type of transaction
+     * @param amount transaction amount
+     * @param time date and time of the transaction
+     */
+    public Transaction(long transactionId, String accountNumber,String secondAccountNumber, 
+        String transactionType, double amount, LocalDateTime time) {
+
+        this.transactionId = transactionId;
+        this.accountNumber = accountNumber;
+        this.secondAccountNumber = secondAccountNumber;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.time = time;
+    }
+
     //Getters for transaction properties
     public long getTransactionId() {
         return transactionId;
