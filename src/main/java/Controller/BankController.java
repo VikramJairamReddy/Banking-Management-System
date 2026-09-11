@@ -15,17 +15,20 @@ import java.util.List;
 
 import DAO.AccountDAO;
 import DAO.CustomerDAO;
+import DAO.TransactionDAO;
 
 public class BankController {
 
     private Bank bank;
     private CustomerDAO customerDAO;
     private AccountDAO accountDAO;
+    private TransactionDAO transactionDAO;
 
     public BankController() {
         this.bank = Bank.getInstance();
         this.customerDAO = new CustomerDAO();
         this.accountDAO = new AccountDAO();
+        this.transactionDAO = new TransactionDAO();
     }
 
     // -------- ACCOUNT --------
@@ -162,7 +165,7 @@ public class BankController {
      * @return list of all transactions
      */
     public List<Transaction> getAllTransactions() {
-        return bank.getAllTransactions();
+        return (List<Transaction>) transactionDAO.getAllTransactions();
     }
 
     /**
@@ -175,7 +178,7 @@ public class BankController {
         if(!bank.accountExists(accountNumber)) {
             throw new IllegalArgumentException("Account does not exist");
         }
-        return bank.getTransactionHistory(accountNumber);
+        return (List<Transaction>) transactionDAO.getTransactionHistory(accountNumber);
     }
 
     /**
@@ -185,7 +188,7 @@ public class BankController {
      * @return list of transactions matching the search term
      */
     public List<Transaction> searchTransactions(String searchTerm) {
-        return bank.searchTransactions(searchTerm);
+        return (List<Transaction>) transactionDAO.searchTransactions(searchTerm);
     }
 
     // -------- ID GENERATION --------
@@ -205,7 +208,7 @@ public class BankController {
      * @return total number of Accounts
      */
     public int getNumberOfAccounts() {
-        return bank.getNumberOfAccounts();
+        return accountDAO.getNumberOfAccounts();
     }
 
     /**
@@ -214,6 +217,6 @@ public class BankController {
      * @return count of today's transactions
      */
     public int getTodayTransactionCount() {
-        return bank.getTodayTransactionCount();
+        return transactionDAO.getTodayTransactionCount();
     }
 }
