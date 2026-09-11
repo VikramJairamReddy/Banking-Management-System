@@ -291,4 +291,30 @@ public class AccountDAO {
 
         return "ACCT" + nextId;
     }
+
+    /**
+     * Returns the total number of accounts in the database.
+     *
+     * @return total number of accounts
+     */
+    public int getNumberOfAccounts() {
+        
+        String sql = "SELECT COUNT(*) FROM Accounts";
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+
+            if(result.next()) {
+                return result.getInt(1);
+            }
+        }
+        catch(SQLException e) {
+            System.out.println("Failed to count accounts.");
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 }
