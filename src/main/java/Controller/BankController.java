@@ -133,7 +133,7 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean deposit(String accountNumber, double amount) {
-        return bank.deposit(accountNumber, amount);
+        return transactionDAO.deposit(accountNumber, amount);
     }
 
     /**
@@ -144,7 +144,7 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean withdraw(String accountNumber, double amount) {
-        return bank.withdraw(accountNumber, amount);
+        return transactionDAO.withdraw(accountNumber, amount);
     }
 
     /**

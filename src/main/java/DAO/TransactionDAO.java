@@ -268,6 +268,83 @@ public class TransactionDAO {
                 amount, time);
     }
 
+
+    /**
+     * method to perform the withdraw action on the database
+     * It will create a new transaction with the given account number, amount, and transaction type.
+     * 
+     * @param accountNumber the account number to withdraw from
+     * @param amount the amount to withdraw
+     * @return true if the transaction was successful, false otherwise
+     */
+    public boolean withdraw(String accountNumber, double amount) {
+
+        String sql = "UPDATE Accounts SET balance = balance - ? WHERE accountNumber = ?";
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            long transactionId = generateTransactionId();
+
+            statement.setDouble(1, amount);
+            statement.setString(2, accountNumber);
+
+            addTransaction(new Transaction(transactionId, accountNumber, 
+                null, "withdraw", amount, LocalDateTime.now()));
+
+            int result = statement.executeUpdate();
+
+            statement.close();
+
+            return result > 0;
+        }
+        catch(SQLException e) {
+            System.out.println("Failed to perform withdraw transaction.");
+            e.printStackTrace();
+        
+        }
+        return false;
+    }
+
+    /**
+     * method to perform the deposit action on the database
+     * It will create a new transaction with the given account number, amount, and transaction type.
+     * 
+     * @param accountNumber the account number to deposit to
+     * @param amount the amount to deposit
+     * @return true if the transaction was successful, false otherwise
+     */
+    public boolean deposit(String accountNumber, double amount) {
+
+        String sql = "UPDATE Accounts SET balance = balance + ? WHERE accountNumber = ?";
+
+        try {
+
+            PreparedStatement statement = connection.prepareStatement(sql);
+
+            long transactionId = generateTransactionId();
+
+            statement.setDouble(1, amount);
+            statement.setString(2, accountNumber);
+
+            addTransaction(new Transaction(transactionId, accountNumber, 
+                null, "withdraw", amount, LocalDateTime.now()));
+
+            int result = statement.executeUpdate();
+
+            statement.close();
+
+            return result > 0;
+        }
+        catch(SQLException e) {
+            System.out.println("Failed to perform withdraw transaction.");
+            e.printStackTrace();
+        
+        }
+        return false;
+    }
+
     /**
      * Generates the next transaction ID.
      *
