@@ -277,7 +277,7 @@ public class TransactionDAO {
      * @param amount the amount to withdraw
      * @return true if the transaction was successful, false otherwise
      */
-    public boolean withdraw(String accountNumber, double amount) {
+    public boolean withdraw(String accountNumber, double amount, boolean isTransfer) {
 
         String sql = "UPDATE Accounts SET balance = balance - ? WHERE accountNumber = ?";
 
@@ -290,8 +290,10 @@ public class TransactionDAO {
             statement.setDouble(1, amount);
             statement.setString(2, accountNumber);
 
-            addTransaction(new Transaction(transactionId, accountNumber, 
-                null, "withdraw", amount, LocalDateTime.now()));
+            if(!isTransfer) {
+                addTransaction(new Transaction(transactionId, accountNumber, 
+                    null, "withdraw", amount, LocalDateTime.now()));
+            }
 
             int result = statement.executeUpdate();
 
@@ -315,7 +317,7 @@ public class TransactionDAO {
      * @param amount the amount to deposit
      * @return true if the transaction was successful, false otherwise
      */
-    public boolean deposit(String accountNumber, double amount) {
+    public boolean deposit(String accountNumber, double amount, boolean isTransfer) {
 
         String sql = "UPDATE Accounts SET balance = balance + ? WHERE accountNumber = ?";
 
@@ -328,8 +330,10 @@ public class TransactionDAO {
             statement.setDouble(1, amount);
             statement.setString(2, accountNumber);
 
-            addTransaction(new Transaction(transactionId, accountNumber, 
-                null, "withdraw", amount, LocalDateTime.now()));
+            if(!isTransfer) {
+                addTransaction(new Transaction(transactionId, accountNumber, 
+                    null, "deposit", amount, LocalDateTime.now()));
+            }
 
             int result = statement.executeUpdate();
 
@@ -339,6 +343,56 @@ public class TransactionDAO {
         }
         catch(SQLException e) {
             System.out.println("Failed to perform withdraw transaction.");
+            e.printStackTrace();
+        
+        }
+        return false;
+    }
+
+    /**
+     * method to perform the transfer action on the database
+     * It will create a new transaction with the given account numbers, amount, and transaction type.
+     * 
+     * @param fromAccount the account number to transfer from
+     * @param toAccount the account number to transfer to
+     * @param amount the amount to transfer
+     * @return true if the transaction was successful, false otherwise
+     */
+    public boolean transfer(String fromAccount, String toAccount, double amount) {
+
+        String sql1 = "UPDATE Accounts SET balance = balance - ? WHERE accountNumber = ?";
+        String sql2 = "UPDATE Accounts SET balance = balance + ? WHERE accountNumber = ?";
+
+        try {
+
+            PreparedStatement statement1 = connection.prepareStatement(sql1);
+            PreparedStatement statement2 = connection.prepareStatement(sql2);
+
+            long transactionId = generateTransactionId();
+
+            statement1.setDouble(1, amount);
+            statement1.setString(2, fromAccount);
+
+            statement2.setDouble(1, amount);
+            statement2.setString(2, toAccount);
+
+            addTransaction(new Transaction(transactionId, fromAccount, toAccount, 
+                "transfer", amount, LocalDateTime.now()));
+
+            int result1 = statement1.executeUpdate();
+            int result2 = statement2.executeUpdate();
+
+            if(result1 > 0 && result2 > 0) {
+                withdraw(fromAccount, amount, true);
+                deposit(toAccount, amount, true);
+                return true;
+            }
+
+            statement1.close();
+            statement2.close();
+        }
+        catch(SQLException e) {
+            System.out.println("Failed to perform transfer transaction.");
             e.printStackTrace();
         
         }

@@ -133,7 +133,10 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean deposit(String accountNumber, double amount) {
-        return transactionDAO.deposit(accountNumber, amount);
+        if(accountDAO.findByAccountNumber(accountNumber) == null || amount <= 0) {
+            throw new IllegalArgumentException("Invalid Entry: Check account number and amount");
+        }
+        return transactionDAO.deposit(accountNumber, amount, false);
     }
 
     /**
@@ -144,7 +147,10 @@ public class BankController {
      * @return true if successful, otherwise false
      */
     public boolean withdraw(String accountNumber, double amount) {
-        return transactionDAO.withdraw(accountNumber, amount);
+        if(accountDAO.findByAccountNumber(accountNumber) == null || amount <= 0) {
+            throw new IllegalArgumentException("Invalid Entry: Check account number and amount");
+        }
+        return transactionDAO.withdraw(accountNumber, amount, false);
     }
 
     /**
@@ -156,7 +162,14 @@ public class BankController {
      * @return true if successful, false otherwise
      */
     public boolean transfer(String from, String to, double amount) {
-        return bank.transfer(from, to, amount);
+        if(from.equals(to)) {
+            throw new IllegalArgumentException("Cannot transfer to the same account");
+        }
+        if(accountDAO.findByAccountNumber(from) == null || accountDAO.findByAccountNumber(to) == null 
+            || amount <= 0) {
+            throw new IllegalArgumentException("Invalid Entry: Check account numbers and amount");
+        }
+        return transactionDAO.transfer(from, to, amount);
     }
 
     /**
@@ -175,7 +188,7 @@ public class BankController {
      * @return List of all transactions
      * */
     public List<Transaction> getTransactionHistory(String accountNumber) {
-        if(!bank.accountExists(accountNumber)) {
+        if(accountDAO.findByAccountNumber(accountNumber) == null) {
             throw new IllegalArgumentException("Account does not exist");
         }
         return (List<Transaction>) transactionDAO.getTransactionHistory(accountNumber);
@@ -191,16 +204,7 @@ public class BankController {
         return (List<Transaction>) transactionDAO.searchTransactions(searchTerm);
     }
 
-    // -------- ID GENERATION --------
-
-    /**
-     * Requests generation of new account number.
-     *
-     * @return unique account number
-     */
-    public String generateAccountNumber() {
-        return bank.generateAccountNumber();
-    }
+    // -------- DASHBOARD GETTERS --------
 
     /**
      * return the total number of accounts stored.
